@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css"/>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <script src="~/Scripts/jquery-3.6.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <title>@Page.Title</title>
+    @RenderSection("head", required: false)
+</head>
+<body>
+    <div class="container body-content">
+        @RenderPage("_Header.cshtml")
+        @RenderBody()
+    </div>
+    @RenderPage("_Footer.cshtml")
+
+</body>
+</html>

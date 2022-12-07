@@ -20,3 +20,11 @@ textarea {
     color: #b94a48;
 }
 
+.footer {
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: lightgray;
+}
+
