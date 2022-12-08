@@ -6,17 +6,32 @@
     Layout = "~/Views/Shared/_MyDefaultLayout.cshtml";
 }
 
-<h2>newAdmin</h2>
-
 <form action="submitAdmin" method="post">
-    Enter username:
-    <input type="text" name="admin.Username" value="@Model.admin.Username" /> @Html.ValidationMessageFor(x => x.admin.Username) <br />
-    Enter password:
-    <input type="password" name="admin.Password" value="@Model.admin.Password" /> @Html.ValidationMessageFor(x => x.admin.Password) <br />
-    Enter email:
-    <input type="text" name="admin.Email" value="@Model.admin.Email" /> @Html.ValidationMessageFor(x => x.admin.Email) <br />
-    Enter phone:
-    <input type="text" name="admin.Phone" value="@Model.admin.Phone" /> @Html.ValidationMessageFor(x => x.admin.Phone) <br />
-    <input type="submit" value="Add Admin" />
+    <div class="mb-3">
+        <label for="admin_username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="admin_username" name="admin.Username" value="@Model.admin.Username">
+        <div class="form-text">@Html.ValidationMessageFor(x => x.admin.Username)</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="admin_password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="admin_password" name="admin.Password" value="@Model.admin.Password">
+        <div class="form-text">@Html.ValidationMessageFor(x => x.admin.Password)</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="admin_email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="admin_email" aria-describedby="emailHelp" name="admin.Email" value="@Model.admin.Email">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        <div class="form-text">@Html.ValidationMessageFor(x => x.admin.Email)</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="admin_phone">Phone number</label>
+        <input type="text" name="admin.Phone" value="@Model.admin.Phone" id="admin_phone" class="form-control"/>
+        <div class="form-text">@Html.ValidationMessageFor(x => x.admin.Email)</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
