@@ -6,42 +6,82 @@
 <div class="choose_flight">
     <div class="card">
         <div class="card-header">
-            Featured
+            Just pick a destination
         </div>
         <div class="card-body">
-            <div class="card-title">
-                <select class="form-select input-sm" aria-label="Default select example">
-                    <option selected value="One-way">One-way</option>
-                    <option value="Two-way">Two-way</option>
-                </select>
+            <div class="card-title row">
+                <form action="HomePage" method="post" class="col-auto">
+                    <input type="submit" name="flyOption" value="One-way" class="btn btn-primary" />
+                </form>
+                <form action="HomePage" method="post" class="col-auto">
+                    <input type="submit" name="flyOption" value="Two-way" class="btn btn-primary" />
+                </form>
             </div>
-            <form class="row gy-2 gx-3 align-items-center">
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInputGroup">From</label>
-                    <div class="input-group">
-                        <div class="input-group-text">From</div>
-                        <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="Tel-Aviv">
+            @if (ViewBag.flyOption == "Two-way")
+            {
+                <form class="row gy-2 gx-3 align-items-center">
+                    <div class="col-auto">
+                        <label class="visually-hidden" for="autoSizingInputGroup">From</label>
+                        <div class="input-group">
+                            <div class="input-group-text">From</div>
+                            <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="Tel-Aviv">
+                        </div>
                     </div>
-                </div>
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInputGroup">To</label>
-                    <div class="input-group">
-                        <div class="input-group-text">To</div>
-                        <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="San-Francisco">
+                    <div class="col-auto">
+                        <label class="visually-hidden" for="autoSizingInputGroup">To</label>
+                        <div class="input-group">
+                            <div class="input-group-text">To</div>
+                            <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="San-Francisco">
+                        </div>
                     </div>
-                </div>
-                <div class="col-auto">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="autoSizingCheck">
-                        <label class="form-check-label" for="autoSizingCheck">
-                            Remember me
-                        </label>
+                    <div class="col-auto">
+                        <label class="visually-hidden" for="autoSizingInputGroup">Departure</label>
+                        <div class="input-group">
+                            <div class="input-group-text">Departure</div>
+                            <input type="date" class="form-control" id="autoSizingInputGroup" value="Anytime">
+                        </div>
                     </div>
-                </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
+                    <div class="col-auto">
+                        <label class="visually-hidden" for="autoSizingInputGroup">Return</label>
+                        <div class="input-group">
+                            <div class="input-group-text">Return</div>
+                            <input type="date" class="form-control" id="autoSizingInputGroup" placeholder="Anytime">
+                        </div>
+                    </div>
+                    <div class="col-auto p-lg-3">
+                        <button type="submit" class="btn btn-primary">Find a fly!</button>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <form class="row gy-2 gx-3 align-items-center">
+                    <div class="col-auto">
+                        <label class="visually-hidden" for="autoSizingInputGroup">From</label>
+                        <div class="input-group">
+                            <div class="input-group-text">From</div>
+                            <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="Tel-Aviv">
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <label class="visually-hidden" for="autoSizingInputGroup">To</label>
+                        <div class="input-group">
+                            <div class="input-group-text">To</div>
+                            <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="San-Francisco">
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <label class="visually-hidden" for="autoSizingInputGroup">Departure</label>
+                        <div class="input-group">
+                            <div class="input-group-text">Departure</div>
+                            <input type="date" class="form-control" id="autoSizingInputGroup" value="Anytime">
+                        </div>
+                    </div>
+                    <div class="col-auto p-lg-3">
+                        <button type="submit" class="btn btn-primary">Find a fly!</button>
+                    </div>
+                </form>
+            }
         </div>
     </div>
 </div>

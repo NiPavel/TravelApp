@@ -9,8 +9,10 @@ namespace TravelApp.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        public ActionResult HomePage()
+        public ActionResult HomePage(string flyOption)
         {
+            if(flyOption != null)
+                ViewBag.flyOption = flyOption.ToString();
             return View();
         }
     }
