@@ -20,10 +20,28 @@ namespace TravelApp
             );
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                name: "Adminpanel",
+                url: "AdminPanel",
+                defaults: new { controller = "AdminSignUp", action = "submitAdmin", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "newAdmin",
+                url: "newAdmin",
+                defaults: new { controller = "AdminSignUp", action = "newAdmin", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "SignIn",
+                url: "{controller}/AdminPanel",
+                defaults: new { controller = "Home", action = "SignIn", id = UrlParameter.Optional }
+            );
+
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            //);
         }
     }
 }

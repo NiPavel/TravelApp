@@ -109,8 +109,10 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Css\LayoutPage.css" />
     <Content Include="Css\HomePage.css" />
     <Content Include="Global.asax" />
+    <Content Include="images\travel_search.jpeg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -236,7 +238,7 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="packages.config" />
     <Content Include="Views\AdminSignUp\newAdmin.cshtml" />
-    <Content Include="Views\AdminSignUp\adminPanel.cshtml" />
+    <Content Include="Views\Shared\adminPanel.cshtml" />
     <Content Include="Views\Shared\_MyDefaultLayout.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />

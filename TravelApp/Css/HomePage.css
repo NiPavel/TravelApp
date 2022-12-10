@@ -1,24 +1,13 @@
-﻿body {
-    all: unset;
-}
-
-.footer {
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: lightgray;
-}
-
-.field-validation-error {
-    color: #b94a48;
-}
-
-.choose_flight{
-    margin: auto;
+﻿.choose_flight {
+    margin: 0;
     padding: 10% 0 10% 0;
+    width: 100%;
+    background-image: url("/images/travel_search.jpeg");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
-select.input-sm{
+select.input-sm {
     width: 10%;
 }
+
