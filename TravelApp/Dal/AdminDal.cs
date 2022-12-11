@@ -12,9 +12,9 @@ namespace TravelApp.Dal
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<SignUp>().ToTable("Admins");
+            modelBuilder.Entity<Admin>().ToTable("Admins");
         }
 
-        public DbSet<SignUp> Admins { get; set; }
+        public DbSet<Admin> Admins { get; set; }
     }
 }

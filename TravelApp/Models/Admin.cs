@@ -7,7 +7,7 @@ using System.Web;
 
 namespace TravelApp.Models
 {
-    public class SignUp
+    public class Admin
     {
 
         [Required(ErrorMessage = "Username has to be more than 2 characters")]
@@ -23,6 +23,5 @@ namespace TravelApp.Models
         [Required(ErrorMessage = "Enter the phone please!")]
         [RegularExpression("^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$")]
         public string Phone { get; set; }
-
     }
 }

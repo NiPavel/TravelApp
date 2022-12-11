@@ -8,8 +8,8 @@ namespace TravelApp.ViewModel
 {
     public class AdminView
     {
-        public SignUp admin { get; set; }
+        public Admin admin { get; set; }
 
-        public List<SignUp> admins { get; set; }
+        public List<Admin> admins { get; set; }
     }
 }

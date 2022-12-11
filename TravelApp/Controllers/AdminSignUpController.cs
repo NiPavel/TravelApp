@@ -16,20 +16,20 @@ namespace TravelApp.Controllers
 
         public ActionResult newAdmin()
         {
-            adminView.admin = new SignUp();
-            adminView.admins = new List<SignUp>();
+            adminView.admin = new Admin();
+            adminView.admins = new List<Admin>();
             return View(adminView);
         }
 
         [HttpPost]
-        public ActionResult submitAdmin(SignUp admin)
+        public ActionResult submitAdmin(Admin admin)
         {
             adminView.admin = admin;
             if(ModelState.IsValid)
             {
                 dal.Admins.Add(admin);
                 dal.SaveChanges();
-                adminView.admins = dal.Admins.ToList<SignUp>();
+                adminView.admins = dal.Admins.ToList<Admin>();
                 return View("adminPanel", adminView);
             }
             return View("newAdmin", adminView);

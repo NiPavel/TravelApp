@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TravelApp.Dal;
 using TravelApp.Models;
+using TravelApp.ViewModel;
 
 namespace TravelApp.Controllers
 {
@@ -12,9 +13,10 @@ namespace TravelApp.Controllers
     {
         AdminDal adminDal = new AdminDal();
         // GET: Home
-        public ActionResult HomePage(string flyOption)
+        public ActionResult HomePage()
         {
             //One-way, Two-way options
+            string flyOption = Request.Form["flyOption"];
             if(flyOption != null)
                 ViewBag.flyOption = flyOption.ToString();
 
@@ -23,11 +25,21 @@ namespace TravelApp.Controllers
 
         public ActionResult SignIn(string email, string password)
         {
-            List<SignUp> admins = (from x in adminDal.Admins where (x.Email.Contains(email) && x.Password == password) select x).ToList<SignUp>();
+            AdminView adminView = new AdminView();
+            adminView.admin = new Admin();
+            List<Admin> admins = (from x in adminDal.Admins where (x.Email == email && x.Password == password) select x).ToList<Admin>();
             if (admins.Count != 0)
             {
-                return View("adminPanel");
+                Session["AdminIn"] = true;
+                adminView.admin = admins[0];
+                return View("adminPanel", adminView);
             }
+            return View("HomePage");
+        }
+
+        public ActionResult SignOut()
+        {
+            Session["AdminIn"] = null;
             return View("HomePage");
         }
     }

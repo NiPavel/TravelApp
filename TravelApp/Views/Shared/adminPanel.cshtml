@@ -2,8 +2,14 @@
 
 @{
     ViewBag.Title = "adminPanel";
+    Layout = "~/Views/Shared/_MyDefaultLayout.cshtml";
 }
 
 <h2>adminPanel</h2>
-
+<h3>Hello @Model.admin.Username</h3>
+<div class="container">
+    <div class="card">
+        <div class="card-title"> Flights</div>
+    </div>
+</div>
 
