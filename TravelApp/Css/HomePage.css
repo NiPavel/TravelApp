@@ -1,5 +1,5 @@
 ﻿.choose_flight {
-    margin: 0;
+    margin: auto;
     padding: 10% 0 10% 0;
     width: 100%;
     background-image: url("/images/travel_search.jpeg");
@@ -10,4 +10,5 @@
 select.input-sm {
     width: 10%;
 }
+
 

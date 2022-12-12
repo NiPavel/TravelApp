@@ -111,6 +111,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Css\LayoutPage.css" />
     <Content Include="Css\HomePage.css" />
+    <Content Include="Css\adminPanel.css" />
     <Content Include="Global.asax" />
     <Content Include="images\travel_search.jpeg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
