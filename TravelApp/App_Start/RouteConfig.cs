@@ -26,6 +26,12 @@ namespace TravelApp
             );
 
             routes.MapRoute(
+                name: "returnToAdminPanel",
+                url: "Back/AdminPanel",
+                defaults: new { controller = "Home", action = "returnToAdminPanel", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "newAdmin",
                 url: "newAdmin",
                 defaults: new { controller = "AdminSignUp", action = "newAdmin", id = UrlParameter.Optional }

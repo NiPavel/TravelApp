@@ -12,6 +12,7 @@ namespace TravelApp.Controllers
     public class HomeController : Controller
     {
         AdminDal adminDal = new AdminDal();
+        AdminView adminView = new AdminView();
         // GET: Home
         public ActionResult HomePage()
         {
@@ -25,13 +26,14 @@ namespace TravelApp.Controllers
 
         public ActionResult SignIn(string email, string password)
         {
-            AdminView adminView = new AdminView();
+            
             adminView.admin = new Admin();
             List<Admin> admins = (from x in adminDal.Admins where (x.Email == email && x.Password == password) select x).ToList<Admin>();
             if (admins.Count != 0)
             {
                 Session["AdminIn"] = true;
                 adminView.admin = admins[0];
+                Session["Admin"] = adminView.admin;
                 return View("adminPanel", adminView);
             }
             return View("HomePage");
@@ -41,6 +43,13 @@ namespace TravelApp.Controllers
         {
             Session["AdminIn"] = null;
             return View("HomePage");
+        }
+
+        public ActionResult returnToAdminPanel()
+        {
+            adminView.admin = new Admin();
+            adminView.admin = (Admin)Session["Admin"];
+            return View("adminPanel", adminView);
         }
     }
 }
