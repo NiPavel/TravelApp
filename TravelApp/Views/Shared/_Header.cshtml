@@ -9,19 +9,19 @@
                 @if (Session["AdminIn"] != null)
                 {
                     <li class="nav-item">
-                        <a class="nav-link" href="Back/AdminPanel">Link</a>
+                        <a class="nav-link" href="@Url.Content("~/Back/AdminPanel")">Admin Panel</a>
                     </li>
                 }
                 else
                 {
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">My Flights</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">My Flights</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Make payment</a>
+                    </li>
                 }
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
+                @*<li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Link
                     </a>
@@ -31,7 +31,7 @@
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
-                </li>
+                </li>*@
             </ul>
             @if (Session["AdminIn"] == null)
             {

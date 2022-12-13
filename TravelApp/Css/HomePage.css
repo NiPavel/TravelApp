@@ -1,4 +1,13 @@
-﻿.choose_flight {
+﻿h3 {
+    margin: 1.5rem;
+    padding: 2rem;
+}
+
+.popular_flights{
+    margin: 2rem;
+}
+
+.choose_flight {
     margin: auto;
     padding: 10% 0 10% 0;
     width: 100%;
