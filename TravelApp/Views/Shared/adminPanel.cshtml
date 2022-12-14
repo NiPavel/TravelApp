@@ -1,4 +1,6 @@
 ﻿@model TravelApp.ViewModel.AdminView
+@using TravelApp.Models;
+
 
 @{
     ViewBag.Title = "adminPanel";
@@ -12,17 +14,28 @@
 <h3>Hello @Model.admin.Username</h3>
 <div class="contant">
     <div class="container">
+        @if (ViewBag.AddedFlight != null)
+        {
+            <div class="text-success">@ViewBag.AddedFlight</div>
+        }
         <h4 class="p-2">Flights</h4>
-        <form action="/" method="post">
-            <input type="submit" name="name" value="Add Flight" class="btn btn-primary" id="add-flight"/>
+        <form action="@Url.Content("~/AddFlight")" method="post">
+            <input type="submit" name="name" value="Add Flight" class="btn btn-primary" id="add-flight" />
         </form>
-        <div class="card p-3" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
+        <div class="row">
+            @foreach (Flight flight in Model.flights)
+            {
+                <div class="col-sm-3 m-1">
+                    <div class="card p-1" style="width: 18rem;">
+                        <img class="card-img-top" src="..." alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">From @flight.FromCountry to @flight.ToCountry</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
         <hr />
         <h4 class="p-2 p-3">Airplanes</h4>
@@ -36,3 +49,4 @@
         </div>
     </div>
 </div>
+

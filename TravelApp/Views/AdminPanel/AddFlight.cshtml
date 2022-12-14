@@ -1,0 +1,44 @@
+﻿@model TravelApp.ViewModel.AdminView
+@using TravelApp.Models
+
+@{
+    ViewBag.Title = "AddFlight";
+    Layout = "~/Views/Shared/_MyDefaultLayout.cshtml";
+}
+
+<div class="container">
+    <h3>New Flight</h3>
+    <form action="SubmitFlight" method="post" class="form-control m-md-4">
+        <div class="mb-3">
+            <label for="flight_id" class="form-label">Flight Id</label>
+            <input type="text" class="form-control" id="flight_id" name="flight.Id" value="">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.flight.Id)</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="from_country" class="form-label">From</label>
+            <input type="text" class="form-control" id="from_country" name="flight.FromCountry" value="">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.flight.FromCountry)</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="to_country" class="form-label">To</label>
+            <input type="text" class="form-control" id="to_country" name="flight.ToCountry" value="">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.flight.ToCountry)</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="price" class="form-label">Price of the Flight</label>
+            <input type="text" class="form-control" id="price" name="flight.Price" value="">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.flight.Price)</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="seats" class="form-label">Number of seats</label>
+            <input type="text" class="form-control" id="seats" name="flight.Seats" value="">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.flight.Seats)</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">ADD</button>
+    </form>
+</div>

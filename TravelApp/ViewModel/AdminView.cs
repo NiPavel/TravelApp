@@ -10,6 +10,10 @@ namespace TravelApp.ViewModel
     {
         public Admin admin { get; set; }
 
+        public Flight flight { get; set; }
+
         public List<Admin> admins { get; set; }
+
+        public List<Flight> flights { get; set; }
     }
 }
