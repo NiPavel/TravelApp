@@ -50,9 +50,21 @@ namespace TravelApp
             );
 
             routes.MapRoute(
+                name: "EditFlight",
+                url: "EditFlight/{id}",
+                defaults: new { controller = "AdminPanel", action = "EditFlight", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "SubmitFlight",
                 url: "SubmitFlight",
                 defaults: new { controller = "AdminPanel", action = "SubmitFlight", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "SubmitEdition",
+                url: "SubmitEdition",
+                defaults: new { controller = "AdminPanel", action = "SubmitEdition", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
