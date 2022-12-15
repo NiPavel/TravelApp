@@ -33,6 +33,21 @@ namespace TravelApp.Controllers
             return View(adminView);
         }
 
+        public ActionResult DeleteFlight(int Id)
+        {
+            Flight temp = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
+            dal.Flights.Remove(temp);
+            dal.SaveChanges();
+
+            adminView.admin = new Admin();
+            adminView.admin = (Admin)Session["Admin"];
+            ViewBag.AddedFlight = "You have deleted a flight succefully!";
+
+            List<Flight> flights = (from x in dal.Flights select x).ToList<Flight>();
+            adminView.flights = flights;
+            return View("adminPanel", adminView);
+        }
+
         public ActionResult SubmitFlight(Flight flight)
         {
             adminView.flight = flight;
