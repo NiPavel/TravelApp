@@ -21,23 +21,42 @@
                         <a class="nav-link" href="#">Make payment</a>
                     </li>
                 }
-                @*<li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Link
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>*@
             </ul>
-            @if (Session["AdminIn"] == null)
-            {
+            @if (Session["AdminIn"] == null && Session["UserIn"] == null) { 
+            <div class="dropdown dropstart">
+                <button type="button" class="btn btn-primary mx-2" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                    Enter for User
+                </button>
+                <div class="dropdown-menu">
+                    <form class="px-4 py-3" action="@Url.Content("~/Home/UserSignIn")" method="post">
+                        <div class="mb-3">
+                            <label for="Email" class="form-label">Email address</label>
+                            <input name="email" type="email" class="form-control" id="Email" placeholder="email@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Password" class="form-label">Password</label>
+                            <input name="password" type="password" class="form-control" id="Password" placeholder="Password">
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                                <label class="form-check-label" for="dropdownCheck">
+                                    Remember me
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sign in</button>
+                    </form>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/newUser">Haven't been here? Sign up</a>
+                    <a class="dropdown-item" href="#">Forgot password?</a>
+                </div>
+            </div>
+
+
                 <div class="dropdown dropstart">
                     <button type="button" class="btn btn-primary" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                        Enter for an Admin
+                        Enter for Admin
                     </button>
                     <div class="dropdown-menu">
                         <form class="px-4 py-3" action="@Url.Content("~/Home/AdminPanel")" method="post">

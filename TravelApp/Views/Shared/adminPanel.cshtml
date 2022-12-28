@@ -23,20 +23,23 @@
             <input type="submit" name="name" value="Add Flight" class="btn btn-primary" id="add-flight" />
         </form>
         <div class="row">
-            @foreach (Flight flight in Model.flights)
+            @if (Model.flights != null)
             {
-                <div class="col-sm-3 m-1">
-                    <div class="card p-1" style="width: 18rem;">
-                        <img class="card-img-top" src="..." alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">From @flight.FromCountry to @flight.ToCountry</h5>
-                            <p class="card-text">Price: @flight.Price</p>
-                            <p class="card-text">Number of seats: @flight.Seats</p>
-                            <a href="@Url.Content("~/EditFlight/")@flight.Id" class="btn btn-primary">Edit</a>
-                            <a href="@Url.Content("~/DeleteFlight/")@flight.Id" class="btn btn-primary">Delete</a>
+                foreach (Flight flight in Model.flights)
+                {
+                    <div class="col-sm-3 m-1">
+                        <div class="card p-1" style="width: 18rem;">
+                            <img class="card-img-top" src="..." alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">From @flight.FromCountry to @flight.ToCountry</h5>
+                                <p class="card-text">Price: @flight.Price</p>
+                                <p class="card-text">Number of seats: @flight.Seats</p>
+                                <a href="@Url.Content("~/EditFlight/")@flight.Id" class="btn btn-primary">Edit</a>
+                                <a href="@Url.Content("~/DeleteFlight/")@flight.Id" class="btn btn-primary">Delete</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             }
         </div>
         <hr />

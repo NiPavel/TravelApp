@@ -20,6 +20,18 @@ namespace TravelApp
             );
 
             routes.MapRoute(
+                name: "OneDirection",
+                url: "OneDirectionFly",
+                defaults: new { controller = "Home", action = "OneDirectionFly", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "addUserFlight",
+                url: "addUserFlight/{id}",
+                defaults: new { controller = "Home", action = "addUserFlight", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Adminpanel",
                 url: "AdminPanel",
                 defaults: new { controller = "AdminSignUp", action = "submitAdmin", id = UrlParameter.Optional }
@@ -42,6 +54,25 @@ namespace TravelApp
                 url: "{controller}/AdminPanel",
                 defaults: new { controller = "Home", action = "SignIn", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+               name: "newUser",
+               url: "newuser",
+               defaults: new { controller = "UserSignUp", action = "newUser", id = UrlParameter.Optional }
+           );
+
+            routes.MapRoute(
+               name: "submitUser",
+               url: "submitUser",
+               defaults: new { controller = "UserSignUp", action = "submitUser", id = UrlParameter.Optional }
+           );
+
+            routes.MapRoute(
+               name: "signInUser",
+               url: "{controller}/MyFlights",
+               defaults: new { controller = "Home", action = "UserSignIn", id = UrlParameter.Optional }
+           );
+
 
             routes.MapRoute(
                 name: "AddFlight",

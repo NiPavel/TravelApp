@@ -1,0 +1,39 @@
+﻿@model TravelApp.ViewModel.UserView
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_MyDefaultLayout.cshtml";
+}
+
+<div class="container">
+    <h3>New User SignUp</h3>
+    <form action="submitUser" method="post" class="form-control m-md-4">
+        <div class="mb-3">
+            <label for="user_username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="user_username" name="user.Username" value="@Model.user.Username">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.user.Username)</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="user_password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="user_password" name="user.Password" value="@Model.user.Password">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.user.Password)</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="user_email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="user_email" aria-describedby="emailHelp" name="user.Email" value="@Model.user.Email">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <div class="form-text">@Html.ValidationMessageFor(x => x.user.Email)</div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="user_phone">Phone number</label>
+            <input type="text" name="user.Phone" value="@Model.user.Phone" id="user_phone" class="form-control" />
+            <div class="form-text">@Html.ValidationMessageFor(x => x.user.Phone)</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">SignUp</button>
+    </form>
+</div>
+

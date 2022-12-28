@@ -6,18 +6,15 @@ using TravelApp.Models;
 
 namespace TravelApp.ViewModel
 {
-    public class AdminView
+    public class UserView
     {
-        public Admin admin { get; set; }
-
         public User user { get; set; }
-
-        public Flight flight { get; set; }
-
-        public List<Admin> admins { get; set; }
 
         public List<User> users { get; set; }
 
+        public Flight flight { get; set; }
         public List<Flight> flights { get; set; }
+
+        public List<Flight> addedFlights { get; set; }
     }
 }

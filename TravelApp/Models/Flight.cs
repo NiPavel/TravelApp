@@ -20,6 +20,9 @@ namespace TravelApp.Models
         [Required(ErrorMessage = "To has to be more than 1 character")]
         [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Incorrect Input")]
         public string ToCountry { get; set; }
+        [Required(ErrorMessage = "To has to be more than 1 character")]
+        public DateTime Date { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required(ErrorMessage = "Price has to be more than 1 digit")]
         [RegularExpression("^[+-]?([0-9]*[.])?[0-9]+$", ErrorMessage = "Incorrect Input")]

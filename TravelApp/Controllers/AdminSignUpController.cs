@@ -12,6 +12,7 @@ namespace TravelApp.Controllers
     public class AdminSignUpController : Controller
     {
         AdminDal dal = new AdminDal();
+        FlightsDal fdal = new FlightsDal();
         AdminView adminView = new AdminView();
 
         public ActionResult newAdmin()
@@ -30,6 +31,8 @@ namespace TravelApp.Controllers
                 dal.Admins.Add(admin);
                 dal.SaveChanges();
                 adminView.admins = dal.Admins.ToList<Admin>();
+                adminView.flights = fdal.Flights.ToList<Flight>();
+                Session["AdminIn"] = true;
                 return View("adminPanel", adminView);
             }
             return View("newAdmin", adminView);
