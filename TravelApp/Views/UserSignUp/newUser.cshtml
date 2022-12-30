@@ -9,9 +9,15 @@
     <h3>New User SignUp</h3>
     <form action="submitUser" method="post" class="form-control m-md-4">
         <div class="mb-3">
-            <label for="user_username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="user_username" name="user.Username" value="@Model.user.Username">
-            <div class="form-text">@Html.ValidationMessageFor(x => x.user.Username)</div>
+            <label for="user_username" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="user_username" name="user.FirstName" value="@Model.user.FirstName">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.user.FirstName)</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="user_username" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="user_username" name="user.LastName" value="@Model.user.LastName">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.user.LastName)</div>
         </div>
 
         <div class="mb-3">

@@ -14,7 +14,10 @@ namespace TravelApp.ViewModel
 
         public Flight flight { get; set; }
         public List<Flight> flights { get; set; }
+        
+        public Order order { get; set; }
+        public List<Order> orders { get; set; }
 
-        public List<Flight> addedFlights { get; set; }
+
     }
 }

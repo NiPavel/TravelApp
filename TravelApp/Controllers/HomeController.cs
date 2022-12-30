@@ -14,6 +14,9 @@ namespace TravelApp.Controllers
         AdminDal adminDal = new AdminDal();
         FlightsDal dal = new FlightsDal();
         UserDal udal = new UserDal();
+        OrderDal odal = new OrderDal();
+
+
         UserView userView = new UserView();
         AdminView adminView = new AdminView();
         
@@ -24,6 +27,8 @@ namespace TravelApp.Controllers
             userView.user = new User();
             userView.users = new List<User>();
             userView.flights = new List<Flight>();
+            userView.order = new Order();
+            userView.orders = new List<Order>();
             //One-way, Two-way options
             string flyOption = Request.Form["flyOption"];
             if(flyOption != null)
@@ -60,6 +65,7 @@ namespace TravelApp.Controllers
                 Session["UserIn"] = true;
                 userView.user = users[0];
                 Session["User"] = userView.user;
+                Session["IdCount"] = 1;
                 return View("MyFlights", userView);
             }
             return View("HomePage", userView);
@@ -69,6 +75,7 @@ namespace TravelApp.Controllers
         {
             Session["AdminIn"] = null;
             Session["UserIn"] = null;
+            Session["IdCount"] = 1;
             return View("HomePage", userView);
         }
 
@@ -90,13 +97,33 @@ namespace TravelApp.Controllers
             return View("HomePage", userView);
         }
 
-        public ActionResult addUserFlight(int Id) { 
-            userView.flights = new List<Flight>();
-            userView.addedFlights = new List<Flight>();
-            Flight temp = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
-            userView.addedFlights.Add(temp);
-            userView.flights = (List<Flight>)Session["UserFlights"];
+        public ActionResult addUserFlight(int Id) {
+            userView.order = new Order();
+            userView.user = new User();
+            userView.flight= new Flight();
 
+            userView.flights = new List<Flight>();
+            userView.orders = new List<Order>();
+
+            Flight temp = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
+            userView.flights = (List<Flight>)Session["UserFlights"];
+            userView.user = (User)Session["User"];
+            userView.flight = temp;
+
+            userView.order.Id = (int)Session["IdCount"];
+            Session["IdCount"] = (int)Session["IdCount"] + 1;
+            userView.order.FName = userView.user.FirstName;
+            userView.order.LName = userView.user.LastName;
+            userView.order.Email = userView.user.Email;
+            userView.order.FlightId = userView.flight.Id;
+            userView.order.FromCountry = userView.flight.FromCountry;
+            userView.order.ToCountry = userView.flight.ToCountry;
+            userView.order.Date = userView.flight.Date;
+            userView.order.Price = userView.flight.Price;
+
+            odal.Orders.Add(userView.order);
+            odal.SaveChanges();
+            userView.orders = odal.Orders.ToList<Order>();
             return View("HomePage", userView);
         }
     }
