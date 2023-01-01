@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using TravelApp.Dal;
@@ -29,6 +30,11 @@ namespace TravelApp.Controllers
             userView.flights = new List<Flight>();
             userView.order = new Order();
             userView.orders = new List<Order>();
+
+            List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
+            if (temp_flights.Count != 0)
+                userView.flights = temp_flights;
+
             //One-way, Two-way options
             string flyOption = Request.Form["flyOption"];
             if(flyOption != null)
@@ -39,7 +45,7 @@ namespace TravelApp.Controllers
 
         public ActionResult SignIn(string email, string password)
         {
-            
+            userView.flights = new List<Flight>();
             adminView.admin = new Admin();
             List<Admin> admins = (from x in adminDal.Admins where (x.Email == email && x.Password == password) select x).ToList<Admin>();
             if (admins.Count != 0)
@@ -52,12 +58,17 @@ namespace TravelApp.Controllers
                 adminView.flights = flights;
                 return View("adminPanel", adminView);
             }
+
+            List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
+            if (temp_flights.Count != 0)
+                userView.flights = temp_flights;
+
             return View("HomePage", userView);
         }
 
         public ActionResult UserSignIn(string email, string password)
         {
-
+            userView.flights = new List<Flight>();
             userView.user = new User();
             List<User> users = (from x in udal.Users where (x.Email == email && x.Password == password) select x).ToList<User>();
             if (users.Count != 0)
@@ -68,14 +79,25 @@ namespace TravelApp.Controllers
                 Session["IdCount"] = 1;
                 return View("MyFlights", userView);
             }
+
+            List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
+            if (temp_flights.Count != 0)
+                userView.flights = temp_flights;
+
             return View("HomePage", userView);
         }
 
         public ActionResult SignOut()
         {
+            userView.flights = new List<Flight>();
             Session["AdminIn"] = null;
             Session["UserIn"] = null;
             Session["IdCount"] = 1;
+
+            List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
+            if (temp_flights.Count != 0)
+                userView.flights = temp_flights;
+
             return View("HomePage", userView);
         }
 
@@ -110,8 +132,14 @@ namespace TravelApp.Controllers
             userView.user = (User)Session["User"];
             userView.flight = temp;
 
-            userView.order.Id = (int)Session["IdCount"];
-            Session["IdCount"] = (int)Session["IdCount"] + 1;
+            List<Order> order_temp = (from x in odal.Orders select x).ToList<Order>();
+
+            if (order_temp.Count == 0)
+                userView.order.Id = (int)Session["IdCount"];
+            else
+            {
+                userView.order.Id = order_temp[order_temp.Count - 1].Id + 1;
+            }
             userView.order.FName = userView.user.FirstName;
             userView.order.LName = userView.user.LastName;
             userView.order.Email = userView.user.Email;
