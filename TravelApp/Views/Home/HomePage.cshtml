@@ -174,8 +174,9 @@
                             <p class="card-text">Price: @Model.twoWay[i + 1].Price</p>
                             <p class="card-text">Avialibale seats: @Model.twoWay[i + 1].Seats</p>
                             @if (Model.user != null && Model.user.FirstName != null)
-                            {
-                                <a href="@Url.Content("~/addTwoWayFlight/")@Model.twoWay[i].Id" class="btn btn-primary">Add a Flight</a>
+                                    {
+                                        Session["FlightId"] = Model.twoWay[i + 1].Id;
+                                <a href="@Url.Content("~/addOneWayFlight/")@Model.twoWay[i].Id" class="btn btn-primary">Add a Flight</a>
                             }
                         </div>
                     </div>
