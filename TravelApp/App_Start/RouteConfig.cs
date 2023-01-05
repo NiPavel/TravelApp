@@ -26,6 +26,24 @@ namespace TravelApp
             );
 
             routes.MapRoute(
+                name: "TwoDirection",
+                url: "TwoDirectionFly",
+                defaults: new { controller = "Home", action = "TwoDirectionFly", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "addOneWayFlight",
+                url: "addOneWayFlight/{id}",
+                defaults: new { controller = "Home", action = "addOneWayFlight", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+               name: "addTwoWayFlight",
+               url: "addTwoWayFlight/{id}",
+               defaults: new { controller = "Home", action = "addTwoWayFlight", id = UrlParameter.Optional }
+           );
+
+            routes.MapRoute(
                 name: "addUserFlight",
                 url: "addUserFlight/{id}",
                 defaults: new { controller = "Home", action = "addUserFlight", id = UrlParameter.Optional }

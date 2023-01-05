@@ -24,33 +24,33 @@
                 </div>
                 @if (ViewBag.flyOption == "Two-way")
                 {
-                    <form class="row gy-2 gx-3 align-items-center">
+                    <form class="row gy-2 gx-3 align-items-center" action="TwoDirectionFly" method="post">
                         <div class="col-auto">
                             <label class="visually-hidden" for="autoSizingInputGroup">From</label>
                             <div class="input-group">
                                 <div class="input-group-text">From</div>
-                                <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="Israel">
+                                <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="Israel" name="fromC">
                             </div>
                         </div>
                         <div class="col-auto">
                             <label class="visually-hidden" for="autoSizingInputGroup">To</label>
                             <div class="input-group">
                                 <div class="input-group-text">To</div>
-                                <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="USA">
+                                <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="USA" name="toC">
                             </div>
                         </div>
                         <div class="col-auto">
                             <label class="visually-hidden" for="autoSizingInputGroup">Departure</label>
                             <div class="input-group">
                                 <div class="input-group-text">Departure</div>
-                                <input type="datetime-local" class="form-control" id="autoSizingInputGroup" value="Anytime">
+                                <input type="datetime-local" class="form-control" id="autoSizingInputGroup" value="Anytime" name="sdate">
                             </div>
                         </div>
                         <div class="col-auto">
                             <label class="visually-hidden" for="autoSizingInputGroup">Return</label>
                             <div class="input-group">
                                 <div class="input-group-text">Return</div>
-                                <input type="datetime-local" class="form-control" id="autoSizingInputGroup" placeholder="Anytime">
+                                <input type="datetime-local" class="form-control" id="autoSizingInputGroup" placeholder="Anytime" name="edate">
                             </div>
                         </div>
                         <div class="col-auto p-lg-3">
@@ -94,38 +94,96 @@
 
 <div class="popular_flights">
     <div class="container">
-        <h3>Flights</h3>
         @if (Model.flights != null)
         {
-            foreach (Flight flight in Model.flights)
-            {
-                <div class="card p-3" style="width: 18rem;">
-                    <img class="card-img-top" src="..." alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">From @flight.FromCountry to @flight.ToCountry</h5>
-                        <p class="card-text">Date: @flight.Date</p>
-                        <p class="card-text">Price: @flight.Price</p>
-                        <p class="card-text">Avialibale seats: @flight.Seats</p>
-                        <a href="@Url.Content("~/addUserFlight/")@flight.Id" class="btn btn-primary">Add a Flight</a>
+            <h3>All Flights</h3>
+            <div class="row">
+                @foreach (Flight flight in Model.flights)
+                {
+                    <div class="col-sm-3 m-1">
+                        <div class="card p-3" style="width: 18rem;">
+                            <img class="card-img-top" src="..." alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">From @flight.FromCountry to @flight.ToCountry</h5>
+                                <p class="card-text">Date: @flight.Date</p>
+                                <p class="card-text">Price: @flight.Price</p>
+                                <p class="card-text">Avialibale seats: @flight.Seats</p>
+                                @if (Model.user != null && Model.user.FirstName != null)
+                                {
+                                    <a href="@Url.Content("~/addOneWayFlight/")@flight.Id" class="btn btn-primary">Add a Flight</a>
+                                }
+                            </div>
+                        </div>
                     </div>
-                </div>
-            }
-        }
-        <hr />
+                 }
+            </div>
+         }
+                <hr />
     </div>
 </div>
 
 <div class="popular_flights">
     <div class="container">
-        <h3>Popular Flights</h3>
-        <div class="card p-3" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+        @if (Model.oneWay != null)
+        {
+            <h3>One-way flights</h3>
+            <div class="row">
+                @foreach (Flight flight in Model.oneWay)
+                {
+                    <div class="col-sm-3 m-1">
+                        <div class="card p-3" style="width: 18rem;">
+                            <img class="card-img-top" src="..." alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">From @flight.FromCountry to @flight.ToCountry</h5>
+                                <p class="card-text">Date: @flight.Date</p>
+                                <p class="card-text">Price: @flight.Price</p>
+                                <p class="card-text">Avialibale seats: @flight.Seats</p>
+                                @if (Model.user != null && Model.user.FirstName != null)
+                                {
+                                    <a href="@Url.Content("~/addOneWayFlight/")@flight.Id" class="btn btn-primary">Add a Flight</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                 }
             </div>
-        </div>
+         }
+    </div>
+</div>
+
+<div class="popular_flights">
+    <div class="container">
+        @if (Model.twoWay != null)
+        {
+            <h3>Two-way flights</h3>
+            <div class="row">
+                @for (int i = 0; i < Model.twoWay.Count; i+=2)
+                {
+                <div class="col-sm-3 m-1">
+                    <div class="card p-3" style="width: 18rem;">
+                        <img class="card-img-top" src="..." alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">From @Model.twoWay[i].FromCountry to @Model.twoWay[i].ToCountry</h5>
+                            <p class="card-text">Date: @Model.twoWay[i].Date</p>
+                            <p class="card-text">Price: @Model.twoWay[i].Price</p>
+                            <p class="card-text">Avialibale seats: @Model.twoWay[i].Seats</p>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">From @Model.twoWay[i + 1].FromCountry to @Model.twoWay[i + 1].ToCountry</h5>
+                            <p class="card-text">Date: @Model.twoWay[i + 1].Date</p>
+                            <p class="card-text">Price: @Model.twoWay[i + 1].Price</p>
+                            <p class="card-text">Avialibale seats: @Model.twoWay[i + 1].Seats</p>
+                            @if (Model.user != null && Model.user.FirstName != null)
+                            {
+                                <a href="@Url.Content("~/addTwoWayFlight/")@Model.twoWay[i].Id" class="btn btn-primary">Add a Flight</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+         }
+                    
     </div>
 </div>
 
