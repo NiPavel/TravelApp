@@ -10,7 +10,7 @@
 
     <h2 class="m-3">Make Payment</h2>
 
-    <form class="row g-3" action="buyFlight" method="post">
+    <form class="row g-3" action="@Url.Content("~/buyFlight/")@Model.flight.Id" method="post">
         <div class="col-md-6">
             <label for="inputId" class="form-label">Id</label>
             <input type="number" class="form-control"  id="inputId" name="payment.Id" value="@Model.payment.Id">
