@@ -1,4 +1,5 @@
 ﻿@model TravelApp.ViewModel.UserView
+@using TravelApp.Models;
 
 @{
     ViewBag.Title = "MakePayment";
@@ -9,22 +10,26 @@
 
     <h2 class="m-3">Make Payment</h2>
 
-    <form class="row g-3">
+    <form class="row g-3" action="buyFlight" method="post">
         <div class="col-md-6">
             <label for="inputId" class="form-label">Id</label>
-            <input type="number" class="form-control" id="inputId">
+            <input type="number" class="form-control"  id="inputId" name="payment.Id" value="@Model.payment.Id">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.payment.Id)</div>
         </div>
         <div class="col-md-6">
             <label for="inputFirstName" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="inputFirstName">
+            <input type="text" class="form-control" id="inputFirstName" value="@Model.payment.FirstName" name="payment.FirstName">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.payment.FirstName)</div>
         </div>
         <div class="col-md-6">
             <label for="inputLastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="inputLastName">
+            <input type="text" class="form-control" id="inputLastName" value="@Model.payment.LastName" name="payment.LastName">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.payment.LastName)</div>
         </div>
         <div class="col-md-6">
             <label for="inputCardNum" class="form-label">Card Number</label>
-            <input type="text" class="form-control" id="inputCardNum">
+            <input type="text" class="form-control" id="inputCardNum" value="@Model.payment.CardNumber" name="payment.CardNumber">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.payment.CardNumber)</div>
         </div>
         <div class="col-md-6">
             <input type="submit" class="form-control btn btn-primary" value="Pay">

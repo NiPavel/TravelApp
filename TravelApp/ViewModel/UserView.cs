@@ -23,5 +23,9 @@ namespace TravelApp.ViewModel
 
         public List<List<Flight>> choosenFlights { get; set;}
 
+        public Payment payment { get; set; }
+
+        public List<Payment> payments { get; set; }
+
     }
 }

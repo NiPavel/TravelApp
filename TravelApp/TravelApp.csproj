@@ -216,6 +216,7 @@
     <Compile Include="Dal\AdminDal.cs" />
     <Compile Include="Dal\FlightsDal.cs" />
     <Compile Include="Dal\OrderDal.cs" />
+    <Compile Include="Dal\PaymentDal.cs" />
     <Compile Include="Dal\UserDal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -223,6 +224,7 @@
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Flight.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\AdminView.cs" />
