@@ -6,55 +6,54 @@
     Layout = "~/Views/Shared/_MyDefaultLayout.cshtml";
 }
 
-<h2>MyFlights</h2>
-
 <div class="popular_flights">
     <div class="container">
         @if (Model.choosenFlights != null)
         {
-            <h3>All Flights</h3>
+            <h3>@Model.user.FirstName's Flights</h3>
             <div class="row">
                 @foreach (List<Flight> flight in Model.choosenFlights)
                 {
                     if (flight.Count < 2)
                     {
-                        <div class="col-sm-3 m-1">
-                            <div class="card p-3" style="width: 18rem;">
-                                <img class="card-img-top" src="..." alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">From @flight[0].FromCountry to @flight[0].ToCountry</h5>
-                                    <p class="card-text">Date: @flight[0].Date</p>
-                                    <p class="card-text">Price: @flight[0].Price</p>
-                                    <p class="card-text">Avialibale seats: @flight[0].Seats</p>
-                                    @if (Model.user != null && Model.user.FirstName != null)
-                                    {
-                                        <a href="@Url.Content("~/addUserFlight/")@flight[0].Id" class="btn btn-primary">Add a Flight</a>
-                                    }
-                                </div>
+                        <div class="card m-3">
+                            <div class="card-body">
+                                <h5 class="card-title">From @flight[0].FromCountry to @flight[0].ToCountry</h5>
+                                <p class="card-text">Date: @flight[0].Date</p>
+                                <p class="card-text">Price: @flight[0].Price</p>
+                                <p class="card-text">Avialibale seats: @flight[0].Seats</p>
+                                <input type="number" name="numOfTickets" value="" />
+                                @if (Model.user != null && Model.user.FirstName != null)
+                                {
+                                    <a href="@Url.Content("~/addUserFlight/")@flight[0].Id" class="btn btn-primary">Buy a Flight</a>
+                                }
                             </div>
                         </div>
                     }
                     else
                     {
-                        <div class="col-sm-3 m-1">
-                            <div class="card p-3" style="width: 18rem;">
-                                <img class="card-img-top" src="..." alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">From @flight[0].FromCountry to @flight[0].ToCountry</h5>
-                                    <p class="card-text">Date: @flight[0].Date</p>
-                                    <p class="card-text">Price: @flight[0].Price</p>
-                                    <p class="card-text">Avialibale seats: @flight[0].Seats</p>
-                                    
+                        <div class="card m-3">
+                            <div class="row g-0">
+
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <h5 class="card-title">From @flight[0].FromCountry to @flight[0].ToCountry</h5>
+                                        <p class="card-text">Date: @flight[0].Date</p>
+                                        <p class="card-text">Price: @flight[0].Price</p>
+                                        <p class="card-text">Avialibale seats: @flight[0].Seats</p>
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">From @flight[1].FromCountry to @flight[1].ToCountry</h5>
-                                    <p class="card-text">Date: @flight[1].Date</p>
-                                    <p class="card-text">Price: @flight[1].Price</p>
-                                    <p class="card-text">Avialibale seats: @flight[1].Seats</p>
-                                    @if (Model.user != null && Model.user.FirstName != null)
-                                    {
-                                        <a href="@Url.Content("~/addUserFlight/")@flight[0].Id" class="btn btn-primary">Add a Flight</a>
-                                    }
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <h5 class="card-title">From @flight[1].FromCountry to @flight[1].ToCountry</h5>
+                                        <p class="card-text">Date: @flight[1].Date</p>
+                                        <p class="card-text">Price: @flight[1].Price</p>
+                                        <p class="card-text">Avialibale seats: @flight[1].Seats</p>
+                                        @if (Model.user != null && Model.user.FirstName != null)
+                                        {
+                                            <a href="@Url.Content("~/addUserFlight/")@flight[0].Id" class="btn btn-primary">Add a Flight</a>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>

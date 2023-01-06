@@ -100,6 +100,7 @@ namespace TravelApp.Controllers
                 userView.user = users[0];
                 Session["User"] = userView.user;
                 Session["IdCount"] = 1;
+                Session["pickedFlight"] = 99999;
                 return View("MyFlights", userView);
             }
 
@@ -124,6 +125,7 @@ namespace TravelApp.Controllers
             Session["IdCount"] = 1;
             Session["User"] = null;
             Session["choosenFlights"] = null;
+            Session["pickedFlight"] = null;
 
             List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
             if (temp_flights.Count != 0)
@@ -225,23 +227,28 @@ namespace TravelApp.Controllers
 
             Flight choosen_flight = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
 
-            if (Session["FlightId"] != null)
+            if ((int)Session["pickedFlight"] != Id || Session["pickedFlight"] == null)
             {
-                int id = (int)Session["FlightId"];
-                Flight choosen_flight2 = (from x in dal.Flights where x.Id == id select x).FirstOrDefault();
-                List<Flight> temp_flights2 = new List<Flight>();
-                temp_flights2.Add(choosen_flight);
-                temp_flights2.Add(choosen_flight2);
-                userView.choosenFlights.Add(temp_flights2);
-                Session["FlightId"] = null;
+                if (Session["FlightId"] != null)
+                {
+                    int id = (int)Session["FlightId"];
+                    Flight choosen_flight2 = (from x in dal.Flights where x.Id == id select x).FirstOrDefault();
+                    List<Flight> temp_flights2 = new List<Flight>();
+                    temp_flights2.Add(choosen_flight);
+                    temp_flights2.Add(choosen_flight2);
+                    userView.choosenFlights.Add(temp_flights2);
+                    Session["FlightId"] = null;
+                }
+                else
+                {
+                    List<Flight> temp_flight = new List<Flight>();
+                    temp_flight.Add(choosen_flight);
+                    userView.choosenFlights.Add(temp_flight);
+                }
+                Session["choosenFlights"] = userView.choosenFlights;
+                Session["pickedFlight"] = Id;
+
             }
-            else
-            {
-                List<Flight> temp_flight = new List<Flight>();
-                temp_flight.Add(choosen_flight);
-                userView.choosenFlights.Add(temp_flight);
-            }
-            Session["choosenFlights"] = userView.choosenFlights;
 
             return View("MyFlights", userView);
         }
