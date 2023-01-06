@@ -22,7 +22,6 @@ namespace TravelApp.Models
         public string LastName { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required(ErrorMessage = "Card Number has to be 16 digits")]
-        [RegularExpression("^(?<!\\d)\\d{16}(?!\\d)|(?<!\\d[ _-])(?<!\\d)\\d{4}(?:[_ -]\\d{4}){3}(?![_ -]?\\d)$")]
         public int CardNumber { get; set; }
     }
 }

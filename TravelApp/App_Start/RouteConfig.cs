@@ -45,7 +45,7 @@ namespace TravelApp
 
             routes.MapRoute(
                 name: "buyFlight",
-                url: "buyFlight/{id}",
+                url: "buyFlight",
                 defaults: new { controller = "Home", action = "buyFlight", id = UrlParameter.Optional }
             );
 
