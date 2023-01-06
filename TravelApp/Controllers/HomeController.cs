@@ -253,6 +253,24 @@ namespace TravelApp.Controllers
             return View("MyFlights", userView);
         }
 
+        public ActionResult makePayment(int Id, int numOfTickets)
+        {
+            List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
+            if (temp_flights.Count != 0)
+                userView.flights = temp_flights;
+
+            if (Session["User"] != null)
+                userView.user = (User)Session["User"];
+
+            if (Session["choosenFlights"] != null)
+                userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
+
+            Session["NumberOfTickets"] = numOfTickets;
+
+
+            return View("MakePayment", userView);
+        }
+
         public ActionResult buyFlight(int Id) {
             userView.order = new Order();
             userView.user = new User();

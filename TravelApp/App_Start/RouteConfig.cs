@@ -38,10 +38,10 @@ namespace TravelApp
             );
 
             routes.MapRoute(
-               name: "addTwoWayFlight",
-               url: "addTwoWayFlight/{id}",
-               defaults: new { controller = "Home", action = "addTwoWayFlight", id = UrlParameter.Optional }
-           );
+                name: "makePayment",
+                url: "makePayment/{id}",
+                defaults: new { controller = "Home", action = "makePayment", id = UrlParameter.Optional }
+            );
 
             routes.MapRoute(
                 name: "addUserFlight",

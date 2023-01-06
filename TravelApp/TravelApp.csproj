@@ -275,6 +275,7 @@
     <Content Include="Views\AdminPanel\EditFlight.cshtml" />
     <Content Include="Views\UserSignUp\newUser.cshtml" />
     <Content Include="Views\Shared\MyFlights.cshtml" />
+    <Content Include="Views\Shared\MakePayment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
