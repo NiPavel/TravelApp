@@ -371,7 +371,7 @@ namespace TravelApp.Controllers
 
                 if (Session["choosenFlights"] != null)
                     userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
-                userView.choosenFlights.Remove(temp => temp == temp_flight);
+                userView.choosenFlights.Remove(temp_flight);
                 Session["choosenFlights"] = userView.choosenFlights;
 
                 if (savePay)
