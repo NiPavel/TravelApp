@@ -31,6 +31,8 @@ namespace TravelApp.Controllers
             userView.flights = new List<Flight>();
             userView.order = new Order();
             userView.orders = new List<Order>();
+            userView.payment = new Payment();
+            userView.payments = new List<Payment>();
 
             List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
             if (temp_flights.Count != 0)
@@ -257,6 +259,7 @@ namespace TravelApp.Controllers
         public ActionResult makePayment(int Id, int numOfTickets)
         {
             userView.payment = new Payment();
+            userView.payments = new List<Payment>();
 
             List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
             if (temp_flights.Count != 0)
@@ -275,8 +278,10 @@ namespace TravelApp.Controllers
             return View("MakePayment", userView);
         }
 
-        public ActionResult buyFlight(Payment pay) {
-            userView.payment = pay;
+        [HttpPost]
+        public ActionResult buyFlight(Payment payment)
+        {
+            userView.payment = payment;
             userView.order = new Order();
             userView.user = new User();
             userView.flight = new Flight();
@@ -284,16 +289,15 @@ namespace TravelApp.Controllers
             userView.flights = new List<Flight>();
             userView.choosenFlights = new List<List<Flight>>();
             userView.orders = new List<Order>();
-            userView.payments = new List<Payment>();
 
-            Flight temp = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
+            Flight temp = (from x in dal.Flights select x).FirstOrDefault();
             userView.flights = (List<Flight>)Session["UserFlights"];
             userView.user = (User)Session["User"];
             userView.flight = temp;
 
             if (ModelState.IsValid)
             {
-                pdal.Payments.Add(pay);
+                pdal.Payments.Add(payment);
                 pdal.SaveChanges();
                 userView.payments = pdal.Payments.ToList<Payment>();
                 List<Order> order_temp = (from x in odal.Orders select x).ToList<Order>();

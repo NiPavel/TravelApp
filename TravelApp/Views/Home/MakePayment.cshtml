@@ -1,5 +1,4 @@
 ﻿@model TravelApp.ViewModel.UserView
-@using TravelApp.Models;
 
 @{
     ViewBag.Title = "MakePayment";
@@ -10,21 +9,21 @@
 
     <h2 class="m-3">Make Payment</h2>
 
-    <form class="row g-3" action="buyFlight" method="post">
+    <form action="/buyFlight" method="post" class="row g-3">
         <div class="col-md-6">
             <label for="inputId" class="form-label">Id</label>
-            <input type="number" class="form-control"  id="inputId" name="payment.Id" value="@Model.payment.Id">
-            <div class="form-text">@Html.ValidationMessageFor(x => x.payment.Id)</div>
+            <input type="number" class="form-control"  id="inputId" name="payment.PayId" value="@Model.payment.PayId">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.payment.PayId)</div>
         </div>
         <div class="col-md-6">
             <label for="inputFirstName" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="inputFirstName" value="@Model.payment.FirstName" name="payment.FirstName">
-            <div class="form-text">@Html.ValidationMessageFor(x => x.payment.FirstName)</div>
+            <input type="text" class="form-control" id="inputFirstName" value="@Model.payment.PayFirstName" name="payment.PayFirstName">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.payment.PayFirstName)</div>
         </div>
         <div class="col-md-6">
             <label for="inputLastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="inputLastName" value="@Model.payment.LastName" name="payment.LastName">
-            <div class="form-text">@Html.ValidationMessageFor(x => x.payment.LastName)</div>
+            <input type="text" class="form-control" id="inputLastName" value="@Model.payment.PayLastName" name="payment.PayLastName">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.payment.PayLastName)</div>
         </div>
         <div class="col-md-6">
             <label for="inputCardNum" class="form-label">Card Number</label>

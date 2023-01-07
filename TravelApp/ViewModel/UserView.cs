@@ -18,14 +18,16 @@ namespace TravelApp.ViewModel
         public Order order { get; set; }
         public List<Order> orders { get; set; }
 
+        public Payment payment { get; set; }
+
+        public List<Payment> payments { get; set; }
+
         public List<Flight> oneWay { get; set; } 
         public List<Flight> twoWay { get; set; } 
 
         public List<List<Flight>> choosenFlights { get; set;}
 
-        public Payment payment { get; set; }
-
-        public List<Payment> payments { get; set; }
+        
 
     }
 }

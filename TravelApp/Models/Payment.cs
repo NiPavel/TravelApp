@@ -13,13 +13,13 @@ namespace TravelApp.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required(ErrorMessage = "Id has to be more than 1 digit")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Incorrect Input")]
-        public int Id { get; set; }
+        public int PayId { get; set; }
         [Required(ErrorMessage = "First name has to be more than 2 characters")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "First name has to be more than 2 charcatres")]
-        public string FirstName { get; set; }
+        public string PayFirstName { get; set; }
         [Required(ErrorMessage = "Last name has to be more than 2 characters")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Last name has to be more than 2 charcatres")]
-        public string LastName { get; set; }
+        public string PayLastName { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required(ErrorMessage = "Card Number has to be 16 digits")]
         public int CardNumber { get; set; }
