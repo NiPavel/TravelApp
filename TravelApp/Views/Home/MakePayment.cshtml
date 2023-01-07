@@ -9,10 +9,10 @@
 
     <h2 class="m-3">Make Payment</h2>
 
-    <form action="/buyFlight" method="post" class="row g-3">
+    <form action="/buyFlight/@Model.flight.Id" method="post" class="row g-3">
         <div class="col-md-6">
             <label for="inputId" class="form-label">Id</label>
-            <input type="number" class="form-control"  id="inputId" name="payment.PayId" value="@Model.payment.PayId">
+            <input type="text" class="form-control" id="inputId" name="payment.PayId" value="@Model.payment.PayId">
             <div class="form-text">@Html.ValidationMessageFor(x => x.payment.PayId)</div>
         </div>
         <div class="col-md-6">
@@ -30,8 +30,15 @@
             <input type="text" class="form-control" id="inputCardNum" value="@Model.payment.CardNumber" name="payment.CardNumber">
             <div class="form-text">@Html.ValidationMessageFor(x => x.payment.CardNumber)</div>
         </div>
+        <h5 class="form-text">The Price: @Session["ThePrice"]</h5>
         <div class="col-md-6">
             <input type="submit" class="form-control btn btn-primary" value="Pay">
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="dropdownCheck" name="savePay" value="true">
+            <label class="form-check-label" for="dropdownCheck">
+                Save the payment
+            </label>
         </div>
     </form>
 </div>

@@ -11,6 +11,8 @@ namespace TravelApp.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required(ErrorMessage = "Id has to be more than 1 digit")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Incorrect Input")]
         public int PayId { get; set; }
@@ -22,6 +24,8 @@ namespace TravelApp.Models
         public string PayLastName { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required(ErrorMessage = "Card Number has to be 16 digits")]
-        public int CardNumber { get; set; }
+        [RegularExpression("^(?<!\\d)\\d{16}(?!\\d)|(?<!\\d[ _-])(?<!\\d)\\d{4}(?=([_ -]))(?:\\1\\d{4}){3}(?![_ -]?\\d)$", ErrorMessage = "Incorrect Input")]
+        public long CardNumber { get; set; }
+        public double Price { get; set; }
     }
 }

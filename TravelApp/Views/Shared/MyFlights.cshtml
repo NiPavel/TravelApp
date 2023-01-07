@@ -57,7 +57,8 @@
                                             <input type="number" name="numOfTickets" value="" id="tickets" class="form-control-sm" />
                                             @if (Model.user != null && Model.user.FirstName != null)
                                             {
-                                                <input class="btn btn-primary" value="Buy a ticket" type="submit"/>
+                                                Session["FlightId"] = flight[1].Id;
+                                                <input class="btn btn-primary" value="Buy a ticket" type="submit" />
                                             }
                                         </form>
                                     </div>

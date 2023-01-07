@@ -275,12 +275,31 @@ namespace TravelApp.Controllers
             Flight choosen_flight = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
             userView.flight = choosen_flight;
 
+            //Check for 2way flights
+            List<Flight> temp_flight = new List<Flight>();
+            if (Session["FlightId"] != null)
+            {
+                int id = (int)Session["FlightId"];
+                Flight choosen_flight2 = (from x in dal.Flights where x.Id == id select x).FirstOrDefault();
+                temp_flight.Add(choosen_flight);
+                temp_flight.Add(choosen_flight2);
+            }
+            else
+                temp_flight.Add(choosen_flight);
+
+            double price = 0;
+            foreach (Flight fl in temp_flight)
+                price += fl.Price;
+            price *= numOfTickets;
+            Session["ThePrice"] = price;
+
             return View("MakePayment", userView);
         }
 
         [HttpPost]
-        public ActionResult buyFlight(Payment payment)
+        public ActionResult buyFlight(Payment payment, int Id, bool savePay=false)
         {
+            userView.payment = new Payment();
             userView.payment = payment;
             userView.order = new Order();
             userView.user = new User();
@@ -289,37 +308,68 @@ namespace TravelApp.Controllers
             userView.flights = new List<Flight>();
             userView.choosenFlights = new List<List<Flight>>();
             userView.orders = new List<Order>();
+            userView.payments = new List<Payment>();
 
-            Flight temp = (from x in dal.Flights select x).FirstOrDefault();
+            Flight temp = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
             userView.flights = (List<Flight>)Session["UserFlights"];
             userView.user = (User)Session["User"];
             userView.flight = temp;
 
+
             if (ModelState.IsValid)
             {
-                pdal.Payments.Add(payment);
-                pdal.SaveChanges();
-                userView.payments = pdal.Payments.ToList<Payment>();
-                List<Order> order_temp = (from x in odal.Orders select x).ToList<Order>();
-
-                if (order_temp.Count == 0)
-                    userView.order.Id = (int)Session["IdCount"];
-                else
+                //Check for 2way flights
+                List<Flight> temp_flight = new List<Flight>();
+                if (Session["FlightId"] != null)
                 {
-                    userView.order.Id = order_temp[order_temp.Count - 1].Id + 1;
+                    int id = (int)Session["FlightId"];
+                    Flight choosen_flight2 = (from x in dal.Flights where x.Id == id select x).FirstOrDefault();
+                    temp_flight.Add(temp);
+                    temp_flight.Add(choosen_flight2);
+                    Session["FlightId"] = null;
                 }
-                userView.order.FName = userView.user.FirstName;
-                userView.order.LName = userView.user.LastName;
-                userView.order.Email = userView.user.Email;
-                userView.order.FlightId = userView.flight.Id;
-                userView.order.FromCountry = userView.flight.FromCountry;
-                userView.order.ToCountry = userView.flight.ToCountry;
-                userView.order.Date = userView.flight.Date;
-                userView.order.Price = userView.flight.Price;
+                else
+                    temp_flight.Add(temp);
+                for (int i = 0; i < (int)Session["NumberOfTickets"]; i++)
+                {
+                    foreach (Flight flight in temp_flight)
+                    {
+                        userView.order = new Order();
+                        List<Order> order_temp = (from x in odal.Orders select x).ToList<Order>();
+                        if (order_temp.Count == 0)
+                            userView.order.Id = (int)Session["IdCount"];
+                        else
+                        {
+                            userView.order.Id = order_temp[order_temp.Count - 1].Id + 1;
+                        }
+                        userView.order.FName = userView.user.FirstName;
+                        userView.order.LName = userView.user.LastName;
+                        userView.order.Email = userView.user.Email;
+                        userView.order.FlightId = flight.Id;
+                        userView.order.FromCountry = flight.FromCountry;
+                        userView.order.ToCountry = flight.ToCountry;
+                        userView.order.Date = flight.Date;
+                        userView.order.Price = flight.Price;
+                        userView.orders.Add(userView.order);
+                        odal.Orders.Add(userView.order);
+                        odal.SaveChanges();
+                    }
+                }
 
-                odal.Orders.Add(userView.order);
-                odal.SaveChanges();
-                userView.orders = odal.Orders.ToList<Order>();
+                if (savePay)
+                { 
+                    userView.payments = (from x in pdal.Payments select x).ToList<Payment>();
+                    userView.payment.Id = userView.payments.Count;
+                    userView.payment.Price = (double)Session["ThePrice"];
+                    pdal.Payments.Add(userView.payment);
+                    pdal.SaveChanges();
+                    userView.payments = pdal.Payments.ToList<Payment>();
+
+                    ViewBag.payment = "Thank You for your charge, the payment has saved!";
+                }
+                else
+                    ViewBag.payment = "Thank you for your charge!";
+
 
                 List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
                 if (temp_flights.Count != 0)
