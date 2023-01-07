@@ -217,6 +217,7 @@
     <Compile Include="Dal\FlightsDal.cs" />
     <Compile Include="Dal\OrderDal.cs" />
     <Compile Include="Dal\PaymentDal.cs" />
+    <Compile Include="Dal\PlaneDal.cs" />
     <Compile Include="Dal\UserDal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -279,6 +280,8 @@
     <Content Include="Views\UserSignUp\newUser.cshtml" />
     <Content Include="Views\Shared\MyFlights.cshtml" />
     <Content Include="Views\Home\MakePayment.cshtml" />
+    <Content Include="Views\AdminPanel\AddPlane.cshtml" />
+    <Content Include="Views\AdminPanel\EditPlane.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

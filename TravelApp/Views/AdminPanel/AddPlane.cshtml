@@ -1,0 +1,33 @@
+﻿@model TravelApp.ViewModel.AdminView
+
+@{
+    ViewBag.Title = "AddPlane";
+    Layout = "~/Views/Shared/_MyDefaultLayout.cshtml";
+}
+
+<div class="container">
+    <h3>New Plane</h3>
+    <form action="SubmitPlane" method="post" class="form-control m-md-4">
+        <h5 class="text-danger">@ViewBag.SameIdPlane</h5>
+        <div class="mb-3">
+            <label for="plane_id" class="form-label">Plane Id</label>
+            <input type="text" class="form-control" id="plane_id" name="plane.PlaneId" value="@Model.plane.PlaneId">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.plane.PlaneId)</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="plane_type" class="form-label">Type of the Plane</label>
+            <input type="text" class="form-control" id="plane_type" name="plane.PlaneType" value="@Model.plane.PlaneType">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.plane.PlaneType)</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="numSeats" class="form-label">To</label>
+            <input type="text" class="form-control" id="numSeats" name="plane.NumSeats" value="@Model.plane.NumSeats">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.plane.NumSeats)</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">ADD</button>
+    </form>
+</div>
+

@@ -8,9 +8,9 @@
 
 <div class="popular_flights">
     <div class="container">
+        <h3>@Model.user.FirstName's Choosen Flights</h3>
         @if (Model.choosenFlights != null)
         {
-            <h3>@Model.user.FirstName's Flights</h3>
             <div class="row">
                 @foreach (List<Flight> flight in Model.choosenFlights)
                 {
@@ -66,6 +66,30 @@
                             </div>
                         </div>
                     }
+                }
+            </div>
+        }
+        <hr />
+    </div>
+</div>
+
+<div class="popular_flights">
+    <div class="container">
+        <h3>@Model.user.FirstName's Bought Flights</h3>
+        @if (Model.boughtFlights != null)
+        {
+            <div class="row">
+                @foreach (Order or in Model.boughtFlights)
+                {
+                    
+                        <div class="card m-3">
+                            <div class="card-body">
+                                <h5 class="card-title">From @or.FromCountry to @or.ToCountry</h5>
+                                <p class="card-text">Date: @or.Date</p>
+                                <p class="card-text">Price: @or.Price</p>
+                            </div>
+                        </div>
+                    
                 }
             </div>
         }

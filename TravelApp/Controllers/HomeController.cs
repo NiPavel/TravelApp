@@ -17,6 +17,7 @@ namespace TravelApp.Controllers
         UserDal udal = new UserDal();
         OrderDal odal = new OrderDal();
         PaymentDal pdal = new PaymentDal();
+        PlaneDal pldal = new PlaneDal();
 
 
         UserView userView = new UserView();
@@ -60,6 +61,8 @@ namespace TravelApp.Controllers
             if (Session["choosenFlights"] != null)
                 userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
 
+            userView.boughtFlights = (from x in odal.Orders where userView.user.Email == x.Email select x).ToList<Order>();
+
             return View("MyFlights", userView);
         }
 
@@ -76,9 +79,12 @@ namespace TravelApp.Controllers
 
                 List<Flight> flights = (from x in dal.Flights select x).ToList<Flight>();
                 adminView.flights = flights;
+                List<Plane> planes = (from x in pldal.Planes select x).ToList<Plane>();
+                adminView.planes = planes;
                 return View("adminPanel", adminView);
             }
 
+            
             List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
             if (temp_flights.Count != 0)
                 userView.flights = temp_flights;
@@ -104,6 +110,7 @@ namespace TravelApp.Controllers
                 Session["User"] = userView.user;
                 Session["IdCount"] = 1;
                 Session["pickedFlight"] = 99999;
+                userView.boughtFlights = (from x in odal.Orders where userView.user.Email == x.Email select x).ToList<Order>();
                 return View("MyFlights", userView);
             }
 
@@ -150,6 +157,9 @@ namespace TravelApp.Controllers
 
             List<Flight> flights = (from x in dal.Flights select x).ToList<Flight>();
             adminView.flights = flights;
+
+            List<Plane> planes = (from x in pldal.Planes select x).ToList<Plane>();
+            adminView.planes = planes;
 
             if (Session["User"] != null)
                 userView.user = (User)Session["User"];
@@ -252,6 +262,7 @@ namespace TravelApp.Controllers
                 Session["pickedFlight"] = Id;
 
             }
+            userView.boughtFlights = (from x in odal.Orders where userView.user.Email == x.Email select x).ToList<Order>();
 
             return View("MyFlights", userView);
         }
@@ -306,7 +317,7 @@ namespace TravelApp.Controllers
             userView.flight = new Flight();
 
             userView.flights = new List<Flight>();
-            userView.choosenFlights = new List<List<Flight>>();
+            userView.boughtFlights = new List<Order>();
             userView.orders = new List<Order>();
             userView.payments = new List<Payment>();
 
@@ -330,6 +341,8 @@ namespace TravelApp.Controllers
                 }
                 else
                     temp_flight.Add(temp);
+
+
                 for (int i = 0; i < (int)Session["NumberOfTickets"]; i++)
                 {
                     foreach (Flight flight in temp_flight)
@@ -356,6 +369,11 @@ namespace TravelApp.Controllers
                     }
                 }
 
+                if (Session["choosenFlights"] != null)
+                    userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
+                userView.choosenFlights.Remove(temp => temp == temp_flight);
+                Session["choosenFlights"] = userView.choosenFlights;
+
                 if (savePay)
                 { 
                     userView.payments = (from x in pdal.Payments select x).ToList<Payment>();
@@ -369,7 +387,6 @@ namespace TravelApp.Controllers
                 }
                 else
                     ViewBag.payment = "Thank you for your charge!";
-
 
                 List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
                 if (temp_flights.Count != 0)

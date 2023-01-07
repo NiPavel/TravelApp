@@ -41,9 +41,9 @@
         </div>
 
         <div class="mb-3">
-            <label for="seats" class="form-label">Number of seats</label>
-            <input type="text" class="form-control" id="seats" name="flight.Seats" value="@Model.flight.Seats">
-            <div class="form-text">@Html.ValidationMessageFor(x => x.flight.Seats)</div>
+            <label for="seats" class="form-label">Plane Id</label>
+            <input type="text" class="form-control" id="seats" name="flight.PlaneId" value="@Model.flight.PlaneId">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.flight.PlaneId)</div>
         </div>
 
         <button type="submit" class="btn btn-primary">ADD</button>

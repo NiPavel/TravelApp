@@ -26,6 +26,7 @@ namespace TravelApp.ViewModel
         public List<Flight> twoWay { get; set; } 
 
         public List<List<Flight>> choosenFlights { get; set;}
+        public List<Order> boughtFlights { get; set;}
 
         
 

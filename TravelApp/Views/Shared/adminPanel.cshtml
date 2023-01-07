@@ -29,11 +29,10 @@
                 {
                     <div class="col-sm-3 m-1">
                         <div class="card p-1" style="width: 18rem;">
-                            <img class="card-img-top" src="..." alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title">From @flight.FromCountry to @flight.ToCountry</h5>
                                 <p class="card-text">Price: @flight.Price</p>
-                                <p class="card-text">Number of seats: @flight.Seats</p>
+                                <p class="card-text">Number of seats: @flight.Seats </p>
                                 <a href="@Url.Content("~/EditFlight/")@flight.Id" class="btn btn-primary">Edit</a>
                                 <a href="@Url.Content("~/DeleteFlight/")@flight.Id" class="btn btn-primary">Delete</a>
                             </div>
@@ -44,13 +43,26 @@
         </div>
         <hr />
         <h4 class="p-2 p-3">Airplanes</h4>
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
+        <form action="@Url.Content("~/AddPlane")" method="post">
+            <input type="submit" name="name" value="Add Plane" class="btn btn-primary" id="add-flight" />
+        </form>
+        <div class="row">
+            @if (Model.planes != null)
+            {
+                foreach (Plane plane in Model.planes)
+                {
+                    <div class="col-sm-3 m-1">
+                        <div class="card p-1" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Id: @plane.PlaneId</h5>
+                                <p class="card-text">Type: @plane.PlaneType</p>
+                                <p class="card-text">Number of seats: @plane.NumSeats</p>
+                                <a href="@Url.Content("~/EditPlane/")@plane.PlaneId" class="btn btn-primary">Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
         </div>
     </div>
 </div>

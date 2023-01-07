@@ -99,9 +99,21 @@ namespace TravelApp
             );
 
             routes.MapRoute(
+                name: "AddPlane",
+                url: "AddPlane",
+                defaults: new { controller = "AdminPanel", action = "AddPlane", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "EditFlight",
                 url: "EditFlight/{id}",
                 defaults: new { controller = "AdminPanel", action = "EditFlight", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "EditPlane",
+                url: "EditPlane/{id}",
+                defaults: new { controller = "AdminPanel", action = "EditPlane", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
@@ -117,9 +129,21 @@ namespace TravelApp
             );
 
             routes.MapRoute(
+                name: "SubmitPlane",
+                url: "SubmitPlane",
+                defaults: new { controller = "AdminPanel", action = "SubmitPlane", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "SubmitEdition",
                 url: "SubmitEdition",
                 defaults: new { controller = "AdminPanel", action = "SubmitEdition", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "SubmitPlaneEdition",
+                url: "SubmitPlaneEdition",
+                defaults: new { controller = "AdminPanel", action = "SubmitPlaneEdition", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(

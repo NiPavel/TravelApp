@@ -19,5 +19,8 @@ namespace TravelApp.ViewModel
         public List<User> users { get; set; }
 
         public List<Flight> flights { get; set; }
+
+        public Plane plane { get; set; }
+        public List<Plane> planes { get; set; }
     }
 }
