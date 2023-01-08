@@ -12,6 +12,7 @@ namespace TravelApp.Controllers
 {
     public class HomeController : Controller
     {
+        public static int count = 0;
         AdminDal adminDal = new AdminDal();
         FlightsDal dal = new FlightsDal();
         UserDal udal = new UserDal();
@@ -26,6 +27,7 @@ namespace TravelApp.Controllers
         // GET: Home
         public ActionResult HomePage()
         {
+            count = 0;
             userView.flight = new Flight();
             userView.user = new User();
             userView.users = new List<User>();
@@ -177,8 +179,6 @@ namespace TravelApp.Controllers
             List<Flight> flights = (from x in dal.Flights where (date == x.Date || fromC == x.FromCountry && toC == x.ToCountry) select x).ToList<Flight>();
             userView.oneWay = flights;
 
-            Session["UserFlights"] = userView.oneWay;
-
             List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
             if (temp_flights.Count != 0)
                 userView.flights = temp_flights;
@@ -209,18 +209,13 @@ namespace TravelApp.Controllers
 
             if (sdate <= edate && returnFlight.Count > 0)
             {
-                
                 toFlight.AddRange(returnFlight);
                 userView.twoWay = toFlight;
-
-                Session["UserFlights"] = userView.twoWay;
-
                 return View("HomePage", userView);
 
             }
             else
             {
-
                 return View("HomePage", userView);
             }
         }
@@ -238,30 +233,46 @@ namespace TravelApp.Controllers
             if (Session["choosenFlights"] != null)
                 userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
 
-            Flight choosen_flight = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
-
-            if ((int)Session["pickedFlight"] != Id || Session["pickedFlight"] == null)
+            if (count == 0)
             {
-                if (Session["FlightId"] != null)
-                {
-                    int id = (int)Session["FlightId"];
-                    Flight choosen_flight2 = (from x in dal.Flights where x.Id == id select x).FirstOrDefault();
-                    List<Flight> temp_flights2 = new List<Flight>();
-                    temp_flights2.Add(choosen_flight);
-                    temp_flights2.Add(choosen_flight2);
-                    userView.choosenFlights.Add(temp_flights2);
-                    Session["FlightId"] = null;
-                }
-                else
-                {
-                    List<Flight> temp_flight = new List<Flight>();
-                    temp_flight.Add(choosen_flight);
-                    userView.choosenFlights.Add(temp_flight);
-                }
+                Flight choosen_flight = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
+                List<Flight> temp_flight = new List<Flight>();
+                temp_flight.Add(choosen_flight);
+                userView.choosenFlights.Add(temp_flight);
+                
                 Session["choosenFlights"] = userView.choosenFlights;
                 Session["pickedFlight"] = Id;
+                count += 1;
 
             }
+            userView.boughtFlights = (from x in odal.Orders where userView.user.Email == x.Email select x).ToList<Order>();
+
+            return View("MyFlights", userView);
+        }
+
+        public ActionResult addTwoWayFlight(int Id, int second)
+        {
+            List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
+            if (temp_flights.Count != 0)
+                userView.flights = temp_flights;
+
+            if (Session["User"] != null)
+                userView.user = (User)Session["User"];
+
+            userView.choosenFlights = new List<List<Flight>>();
+            if (Session["choosenFlights"] != null)
+                userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
+            if (count == 0)
+            {
+                Flight choosen_flight = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
+                Flight choosen_flight2 = (from x in dal.Flights where x.Id == second select x).FirstOrDefault();
+                List<Flight> temp_flights2 = new List<Flight>();
+                temp_flights2.Add(choosen_flight);
+                temp_flights2.Add(choosen_flight2);
+                userView.choosenFlights.Add(temp_flights2);
+                Session["choosenFlights"] = userView.choosenFlights;
+            }
+
             userView.boughtFlights = (from x in odal.Orders where userView.user.Email == x.Email select x).ToList<Order>();
 
             return View("MyFlights", userView);
@@ -288,21 +299,46 @@ namespace TravelApp.Controllers
 
             //Check for 2way flights
             List<Flight> temp_flight = new List<Flight>();
-            if (Session["FlightId"] != null)
-            {
-                int id = (int)Session["FlightId"];
-                Flight choosen_flight2 = (from x in dal.Flights where x.Id == id select x).FirstOrDefault();
-                temp_flight.Add(choosen_flight);
-                temp_flight.Add(choosen_flight2);
-            }
-            else
-                temp_flight.Add(choosen_flight);
+            temp_flight.Add(choosen_flight);
 
             double price = 0;
             foreach (Flight fl in temp_flight)
                 price += fl.Price;
             price *= numOfTickets;
             Session["ThePrice"] = price;
+
+            return View("MakePayment", userView);
+        }
+
+        public ActionResult makePaymentTwo(int Id, int numOfTickets, int second)
+        {
+            userView.payment = new Payment();
+            userView.payments = new List<Payment>();
+
+            List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
+            if (temp_flights.Count != 0)
+                userView.flights = temp_flights;
+
+            if (Session["User"] != null)
+                userView.user = (User)Session["User"];
+
+            if (Session["choosenFlights"] != null)
+                userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
+
+            Session["NumberOfTickets"] = numOfTickets;
+            Flight choosen_flight = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
+            userView.flight = choosen_flight;
+            Flight choosen_flight2 = (from x in dal.Flights where x.Id == second select x).FirstOrDefault();
+            List<Flight> temp_flight = new List<Flight>();
+            temp_flight.Add(choosen_flight);
+            temp_flight.Add(choosen_flight2);
+
+            double price = 0;
+            foreach (Flight fl in temp_flight)
+                price += fl.Price;
+            price *= numOfTickets;
+            Session["ThePrice"] = price;
+            Session["FlightId"] = second;
 
             return View("MakePayment", userView);
         }
@@ -321,11 +357,10 @@ namespace TravelApp.Controllers
             userView.orders = new List<Order>();
             userView.payments = new List<Payment>();
 
-            Flight temp = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
-            userView.flights = (List<Flight>)Session["UserFlights"];
             userView.user = (User)Session["User"];
-            userView.flight = temp;
 
+            Flight temp = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
+            userView.flight = temp;
 
             if (ModelState.IsValid)
             {
@@ -369,8 +404,23 @@ namespace TravelApp.Controllers
                     }
                 }
 
+                //Delete bought flight from the list
                 if (Session["choosenFlights"] != null)
                     userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
+                foreach (List<Flight> flight in userView.choosenFlights)
+                {
+                    if (temp_flight.Count == 2)
+                        flight.RemoveAll(line => (flight[0].Id == temp_flight[0].Id && flight[1].Id == temp_flight[1].Id));
+                    else
+                    {
+                        if (flight.Count == 1)
+                        {
+                            flight.RemoveAll(line => flight[0].Id == temp_flight[0].Id);
+                            break;
+                        }
+
+                    }
+                }
                 userView.choosenFlights.Remove(temp_flight);
                 Session["choosenFlights"] = userView.choosenFlights;
 
