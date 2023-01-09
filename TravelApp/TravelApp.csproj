@@ -211,6 +211,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminPanelController.cs" />
     <Compile Include="Controllers\AdminSignUpController.cs" />
+    <Compile Include="Controllers\ChangePassController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserSignUpController.cs" />
     <Compile Include="Dal\AdminDal.cs" />
@@ -282,6 +283,7 @@
     <Content Include="Views\Home\MakePayment.cshtml" />
     <Content Include="Views\AdminPanel\AddPlane.cshtml" />
     <Content Include="Views\AdminPanel\EditPlane.cshtml" />
+    <Content Include="Views\ChangePass\newUserPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

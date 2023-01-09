@@ -409,16 +409,15 @@ namespace TravelApp.Controllers
                     userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
                 foreach (List<Flight> flight in userView.choosenFlights)
                 {
-                    if (temp_flight.Count == 2)
-                        flight.RemoveAll(line => (flight[0].Id == temp_flight[0].Id && flight[1].Id == temp_flight[1].Id));
-                    else
+                    if (temp_flight.Count == 2 && flight.Count == 2)
                     {
-                        if (flight.Count == 1)
-                        {
+                        flight.RemoveAll(line => (flight[0].Id == temp_flight[0].Id && flight[1].Id == temp_flight[1].Id));
+                        break;
+                    }
+                    if (flight.Count == 1)
+                    {
                             flight.RemoveAll(line => flight[0].Id == temp_flight[0].Id);
                             break;
-                        }
-
                     }
                 }
                 userView.choosenFlights.Remove(temp_flight);

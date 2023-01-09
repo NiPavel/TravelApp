@@ -159,6 +159,30 @@ namespace TravelApp
             );
 
             routes.MapRoute(
+                name: "newUserPassword",
+                url: "newUserPassword",
+                defaults: new { controller = "ChangePass", action = "newUserPassword", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "confirmUserEmail",
+                url: "confirmUserEmail",
+                defaults: new { controller = "ChangePass", action = "confirmUserEmail", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "confirmSecret",
+                url: "confirmSecret",
+                defaults: new { controller = "ChangePass", action = "confirmSecret", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "confirmPassword",
+                url: "confirmPassword",
+                defaults: new { controller = "ChangePass", action = "confirmPassword", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
