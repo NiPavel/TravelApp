@@ -81,29 +81,39 @@ namespace TravelApp.Controllers
             }
             if (sameId)
                 ViewBag.SameIdFlight = "The flight Id is already exists!";
-            return View("AddFlight");
+            return View("AddFlight", adminView);
         }
 
         public ActionResult SubmitEdition(Flight flight)
         {
-            if (ModelState.IsValid)
+            adminView.flight = flight;
+            Plane plane = (from x in pdal.Planes where x.PlaneId == flight.PlaneId select x).FirstOrDefault();
+            Flight flightDataBase = (from x in dal.Flights where x.Id == flight.Id select x).FirstOrDefault();
+            if (flightDataBase.Seats <= plane.NumSeats)
             {
-                dal.Flights.AddOrUpdate(flight);
-                dal.SaveChanges();
-                adminView.flight = flight;
+                if (ModelState.IsValid)
+                {
+                    flight.Seats = plane.NumSeats;
 
-                adminView.admin = new Admin();
-                adminView.admin = (Admin)Session["Admin"];
-                ViewBag.AddedFlight = "You have changed a flight succefully!";
+                    dal.Flights.AddOrUpdate(flight);
+                    dal.SaveChanges();
+                    adminView.flight = flight;
 
-                List<Flight> flights = (from x in dal.Flights select x).ToList<Flight>();
-                adminView.flights = flights;
+                    adminView.admin = new Admin();
+                    adminView.admin = (Admin)Session["Admin"];
+                    ViewBag.AddedFlight = "You have changed a flight succefully!";
 
-                List<Plane> planes = (from x in pdal.Planes select x).ToList<Plane>();
-                adminView.planes = planes;
-                return View("adminPanel", adminView);
+                    List<Flight> flights = (from x in dal.Flights select x).ToList<Flight>();
+                    adminView.flights = flights;
+
+                    List<Plane> planes = (from x in pdal.Planes select x).ToList<Plane>();
+                    adminView.planes = planes;
+                    return View("adminPanel", adminView);
+                }
             }
-            return View("EditFlight/" + flight.Id);
+            else
+                ViewBag.noSeats = "The plane that you want to change doesn't have enought seats!";
+            return View("EditFlight", adminView);
         }
 
         public ActionResult AddPlane()

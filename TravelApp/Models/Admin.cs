@@ -10,9 +10,12 @@ namespace TravelApp.Models
     public class Admin
     {
 
-        [Required(ErrorMessage = "Username has to be more than 2 characters")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Username has to be more than 2 charcatres")]
-        public string Username { get; set; }
+        [Required(ErrorMessage = "First name has to be more than 2 characters")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "First name has to be more than 2 charcatres")]
+        public string FirstName { get; set; }
+        [Required(ErrorMessage = "Last name has to be more than 2 characters")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Last name has to be more than 2 charcatres")]
+        public string LastName { get; set; }
         [Required(ErrorMessage = "Username has to be more than 6 characters")]
         [StringLength(50, MinimumLength = 6, ErrorMessage = "Password has to be more than 6 characters")]
         public string Password { get; set; }

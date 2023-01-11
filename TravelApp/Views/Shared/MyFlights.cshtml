@@ -9,6 +9,10 @@
 <div class="popular_flights">
     <div class="container">
         <h3>@Model.user.FirstName's Choosen Flights</h3>
+        @if (ViewBag.noFlight != null)
+        {
+            <h5 class="text-danger">@ViewBag.noFlight</h5>
+        }
         @if (Model.choosenFlights != null)
         {
             <div class="row">

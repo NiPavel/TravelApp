@@ -11,7 +11,7 @@
 
 <h2>Admin Panel</h2>
 <hr />
-<h3>Hello @Model.admin.Username</h3>
+<h3>Hello @Model.admin.FirstName</h3>
 <div class="contant">
     <div class="container">
         @if (ViewBag.AddedFlight != null)
@@ -31,6 +31,7 @@
                         <div class="card p-1" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title">From @flight.FromCountry to @flight.ToCountry</h5>
+                                <p class="card-text">Date: @flight.Date</p>
                                 <p class="card-text">Price: @flight.Price</p>
                                 <p class="card-text">Number of seats: @flight.Seats </p>
                                 <a href="@Url.Content("~/EditFlight/")@flight.Id" class="btn btn-primary">Edit</a>

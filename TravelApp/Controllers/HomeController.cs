@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
@@ -154,14 +155,14 @@ namespace TravelApp.Controllers
 
         public ActionResult returnToAdminPanel()
         {
-            adminView.admin = new Admin();
-            adminView.admin = (Admin)Session["Admin"];
-
             List<Flight> flights = (from x in dal.Flights select x).ToList<Flight>();
             adminView.flights = flights;
 
             List<Plane> planes = (from x in pldal.Planes select x).ToList<Plane>();
             adminView.planes = planes;
+
+            if (Session["Admin"] != null)
+                adminView.admin = (Admin)Session["Admin"];
 
             if (Session["User"] != null)
                 userView.user = (User)Session["User"];
@@ -297,7 +298,24 @@ namespace TravelApp.Controllers
             Flight choosen_flight = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
             userView.flight = choosen_flight;
 
-            //Check for 2way flights
+            if (choosen_flight.Seats == 0 || choosen_flight.Date < DateTime.UtcNow)
+            {
+                List<Flight> temp_flights2 = (from x in dal.Flights select x).ToList<Flight>();
+                if (temp_flights2.Count != 0)
+                    userView.flights = temp_flights2;
+
+                if (Session["choosenFlights"] != null)
+                    userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
+
+                userView.boughtFlights = (from x in odal.Orders where userView.user.Email == x.Email select x).ToList<Order>();
+
+                if(choosen_flight.Seats == 0)
+                    ViewBag.noFlight = "Sorry, Not enought seats in the flight!";
+                else
+                    ViewBag.noFlight = "Sorry, the flight is alredy departed!";
+                return View("MyFlights", userView);
+            }
+
             List<Flight> temp_flight = new List<Flight>();
             temp_flight.Add(choosen_flight);
 
@@ -329,6 +347,23 @@ namespace TravelApp.Controllers
             Flight choosen_flight = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
             userView.flight = choosen_flight;
             Flight choosen_flight2 = (from x in dal.Flights where x.Id == second select x).FirstOrDefault();
+            if (choosen_flight2.Seats == 0 || choosen_flight.Seats == 0 || choosen_flight.Date < DateTime.UtcNow)
+            {
+
+                List<Flight> temp_flights2 = (from x in dal.Flights select x).ToList<Flight>();
+                if (temp_flights2.Count != 0)
+                    userView.flights = temp_flights2;
+
+                if (Session["choosenFlights"] != null)
+                    userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
+
+                userView.boughtFlights = (from x in odal.Orders where userView.user.Email == x.Email select x).ToList<Order>();
+                if (choosen_flight2.Seats == 0 || choosen_flight.Seats == 0)
+                    ViewBag.noFlight = "Sorry, Not enought seats in the flight!";
+                else
+                    ViewBag.noFlight = "Sorry, the flight is alredy departed!";
+                return View("MyFlights", userView);
+            }
             List<Flight> temp_flight = new List<Flight>();
             temp_flight.Add(choosen_flight);
             temp_flight.Add(choosen_flight2);
@@ -398,6 +433,9 @@ namespace TravelApp.Controllers
                         userView.order.ToCountry = flight.ToCountry;
                         userView.order.Date = flight.Date;
                         userView.order.Price = flight.Price;
+                        flight.Seats -= 1;
+                        dal.Flights.AddOrUpdate(flight);
+                        dal.SaveChanges();
                         userView.orders.Add(userView.order);
                         odal.Orders.Add(userView.order);
                         odal.SaveChanges();
@@ -409,12 +447,12 @@ namespace TravelApp.Controllers
                     userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
                 foreach (List<Flight> flight in userView.choosenFlights)
                 {
-                    if (temp_flight.Count == 2 && flight.Count == 2)
+                    if (temp_flight.Count == 2 && flight.Count == 2 && flight[0].Id == temp_flight[0].Id && flight[1].Id == temp_flight[1].Id)
                     {
                         flight.RemoveAll(line => (flight[0].Id == temp_flight[0].Id && flight[1].Id == temp_flight[1].Id));
                         break;
                     }
-                    if (flight.Count == 1)
+                    if (flight.Count == 1 && flight[0].Id == temp_flight[0].Id)
                     {
                             flight.RemoveAll(line => flight[0].Id == temp_flight[0].Id);
                             break;

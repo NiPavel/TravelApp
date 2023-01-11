@@ -8,10 +8,10 @@
 <div class="container">
     <h3>Edit Flight</h3>
     <form action="@Url.Content("~/SubmitEdition")" method="post" class="form-control m-md-4">
-        @*<h5 class="text-danger">@ViewBag.SameIdFlight</h5>*@
+        <h5 class="text-danger">@ViewBag.noSeats</h5>
         <div class="mb-3">
             <label for="flight_id" class="form-label">Flight Id</label>
-            <input type="text" class="form-control" id="flight_id" name="flight.Id" value="@Model.flight.Id">
+            <input type="text" class="form-control" id="flight_id" name="flight.Id" value="@Model.flight.Id" readonly>
             <div class="form-text">@Html.ValidationMessageFor(x => x.flight.Id)</div>
         </div>
 

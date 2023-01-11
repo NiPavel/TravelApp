@@ -24,7 +24,8 @@ namespace TravelApp.Controllers
         public ActionResult submitUser(User user)
         {
             userView.user = user;
-            if (ModelState.IsValid)
+            bool userEmail = (from x in dal.Users where x.Email == user.Email select x).Any();
+            if (ModelState.IsValid && !userEmail)
             {
                 dal.Users.Add(user);
                 dal.SaveChanges();
@@ -33,6 +34,8 @@ namespace TravelApp.Controllers
                 Session["User"] = userView.user;
                 return View("MyFlights", userView);
             }
+            if (userEmail)
+                ViewBag.sameEmail = "The user with same Email is already registred!";
             return View("newUser", userView);
         }
     }

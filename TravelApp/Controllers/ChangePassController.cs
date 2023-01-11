@@ -82,27 +82,36 @@ namespace TravelApp.Controllers
 
         public ActionResult confirmPassword(string password)
         {
-            if ((User)Session["emailUser"] != null)
+            if (password.Length >= 6)
             {
-                User user = (User)Session["emailUser"];
-                user.Password = password;
-                udal.Users.AddOrUpdate(user);
-                udal.SaveChanges();
-            }
+                if ((User)Session["emailUser"] != null)
+                {
+                    User user = (User)Session["emailUser"];
+                    user.Password = password;
+                    udal.Users.AddOrUpdate(user);
+                    udal.SaveChanges();
+                }
 
-            if ((Admin)Session["emailAdmin"] != null)
+                if ((Admin)Session["emailAdmin"] != null)
+                {
+                    Admin admin = (Admin)Session["emailAdmin"];
+                    admin.Password = password;
+                    adal.Admins.AddOrUpdate(admin);
+                    adal.SaveChanges();
+                }
+
+                ViewBag.ChangedPassword = "You have changed your password succefully!";
+                Session["HideEmail"] = null;
+                Session["emailUser"] = null;
+                Session["emailAdmin"] = null;
+            }
+            else
             {
-                Admin admin = (Admin)Session["emailAdmin"];
-                admin.Password = password;
-                adal.Admins.AddOrUpdate(admin);
-                adal.SaveChanges();
+                ViewBag.RightSecret = "Eneter a new password please";
+                ViewBag.passLength = "Password has to be more than 6 characters.";
             }
-
-            ViewBag.ChangedPassword = "You have changed your password succefully!";
-            Session["HideEmail"] = null;
-            Session["emailUser"] = null;
-            Session["emailAdmin"] = null;
             return View("NewUserPassword");
+
         }
     }
 }

@@ -7,11 +7,18 @@
 }
 <div class="container">
     <h3>New Admin SignUp</h3>
+    <h5 class="text-danger">@ViewBag.sameEmail</h5>
     <form action="AdminPanel" method="post" class="form-control m-md-4">
         <div class="mb-3">
-            <label for="admin_username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="admin_username" name="admin.Username" value="@Model.admin.Username">
-            <div class="form-text">@Html.ValidationMessageFor(x => x.admin.Username)</div>
+            <label for="admin_firsName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="admin_firstName" name="admin.FirstName" value="@Model.admin.FirstName">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.admin.FirstName)</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="admin_lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="admin_lastName" name="admin.LastName" value="@Model.admin.LastName">
+            <div class="form-text">@Html.ValidationMessageFor(x => x.admin.LastName)</div>
         </div>
 
         <div class="mb-3">
@@ -31,6 +38,12 @@
             <label class="form-label" for="admin_phone">Phone number</label>
             <input type="text" name="admin.Phone" value="@Model.admin.Phone" id="admin_phone" class="form-control" />
             <div class="form-text">@Html.ValidationMessageFor(x => x.admin.Phone)</div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="admin_phone">Secret Word</label>
+            <input type="password" name="secretWord" id="admin_phone" class="form-control" />
+            <div class="form-text text-danger">@ViewBag.secret</div>
         </div>
 
         <button type="submit" class="btn btn-primary">SignUp</button>
