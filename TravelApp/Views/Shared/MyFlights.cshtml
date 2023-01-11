@@ -28,7 +28,7 @@
                                 <p class="card-text">Avialibale seats: @flight[0].Seats</p>
                                 <form action="@Url.Content("~/makePayment/")@flight[0].Id" method="post">
                                     <label for="tickets">Choose number of tickets</label>
-                                    <input type="number" name="numOfTickets" value="" id="tickets" class="form-control-sm" />
+                                    <input type="number" name="numOfTickets" value="" id="tickets" class="form-control-sm" min="0"/>
                                     @if (Model.user != null && Model.user.FirstName != null)
                                     {
                                         <input class="btn btn-primary" value="Buy a ticket" type="submit" />
@@ -58,7 +58,7 @@
                                         <p class="card-text">Avialibale seats: @flight[1].Seats</p>
                                         <form action="@Url.Content("~/makePaymentTwo/" + @flight[0].Id + "/" + flight[1].Id)" method="post">
                                             <label for="tickets">Choose number of tickets</label>
-                                            <input type="number" name="numOfTickets" value="" id="tickets" class="form-control-sm" />
+                                            <input type="number" name="numOfTickets" value="" id="tickets" class="form-control-sm" min="0"/>
                                             @if (Model.user != null && Model.user.FirstName != null)
                                             {
                                                 <input class="btn btn-primary" value="Buy a ticket" type="submit" />

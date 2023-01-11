@@ -1,4 +1,5 @@
 ﻿@model TravelApp.ViewModel.AdminView
+@using TravelApp.Models;
 
 @{
     ViewBag.Title = "EditFlight";
@@ -8,7 +9,10 @@
 <div class="container">
     <h3>Edit Flight</h3>
     <form action="@Url.Content("~/SubmitEdition")" method="post" class="form-control m-md-4">
-        <h5 class="text-danger">@ViewBag.noSeats</h5>
+        @if (ViewBag.noSeats != null)
+        {
+            <h5 class="text-danger">@ViewBag.noSeats</h5>
+        }
         <div class="mb-3">
             <label for="flight_id" class="form-label">Flight Id</label>
             <input type="text" class="form-control" id="flight_id" name="flight.Id" value="@Model.flight.Id" readonly>
@@ -40,9 +44,16 @@
         </div>
 
         <div class="mb-3">
-            <label for="seats" class="form-label">Plane Id</label>
-            <input type="text" class="form-control" id="seats" name="flight.PlaneId" value="@Model.flight.PlaneId">
-            <div class="form-text">@Html.ValidationMessageFor(x => x.flight.PlaneId)</div>
+            <label for="seats" class="form-label">Choose Plane Id:</label>
+            <select class="form-select-sm" name="flight.PlaneId">
+                @if (Model.planes != null)
+                {
+                    foreach (Plane plane in Model.planes)
+                    {
+                        <option value="@plane.PlaneId">@plane.PlaneId</option>
+                    }
+                }
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary">Save Changes</button>

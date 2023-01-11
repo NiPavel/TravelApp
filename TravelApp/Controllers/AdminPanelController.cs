@@ -22,6 +22,7 @@ namespace TravelApp.Controllers
         {
             adminView.flight = new Flight();
             adminView.flights = new List<Flight>();
+            adminView.planes = (from x in pdal.Planes select x).ToList<Plane>();
             return View(adminView);
         }
 
@@ -31,6 +32,7 @@ namespace TravelApp.Controllers
             adminView.flights = new List<Flight>();
             Flight temp = (from x in dal.Flights where x.Id == Id select x).FirstOrDefault();
             adminView.flight = temp;
+            adminView.planes = (from x in pdal.Planes select x).ToList<Plane>();
 
             return View(adminView);
         }
@@ -56,6 +58,7 @@ namespace TravelApp.Controllers
         public ActionResult SubmitFlight(Flight flight)
         {
             adminView.flight = flight;
+            adminView.planes = (from x in pdal.Planes select x).ToList<Plane>();
             //Check the id of the flight
             bool sameId = (from x in dal.Flights where x.Id == flight.Id select x).Any();
             if (ModelState.IsValid && !sameId)
@@ -87,6 +90,7 @@ namespace TravelApp.Controllers
         public ActionResult SubmitEdition(Flight flight)
         {
             adminView.flight = flight;
+            adminView.planes = (from x in pdal.Planes select x).ToList<Plane>();
             Plane plane = (from x in pdal.Planes where x.PlaneId == flight.PlaneId select x).FirstOrDefault();
             Flight flightDataBase = (from x in dal.Flights where x.Id == flight.Id select x).FirstOrDefault();
             if (flightDataBase.Seats <= plane.NumSeats)
@@ -159,7 +163,7 @@ namespace TravelApp.Controllers
             }
             if (sameId)
                 ViewBag.SameIdPlane = "The plane Id is already exists!";
-            return View("AddFlight");
+            return View("AddPlane", adminView);
         }
 
         public ActionResult SubmitPlaneEdition(Plane plane)
@@ -182,7 +186,7 @@ namespace TravelApp.Controllers
                 adminView.planes = planes;
                 return View("adminPanel", adminView);
             }
-            return View("EditPlane/" + plane.PlaneId);
+            return View("EditPlane/" + plane.PlaneId, adminView);
         }
     }
 }

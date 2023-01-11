@@ -38,6 +38,11 @@ namespace TravelApp.Controllers
             userView.payment = new Payment();
             userView.payments = new List<Payment>();
 
+            Session["HideEmail"] = null;
+            Session["emailUser"] = null;
+            Session["emailAdmin"] = null;
+            Session["Secret"] = null;
+
             List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
             if (temp_flights.Count != 0)
                 userView.flights = temp_flights;
@@ -71,6 +76,11 @@ namespace TravelApp.Controllers
 
         public ActionResult SignIn(string email, string password)
         {
+            Session["HideEmail"] = null;
+            Session["emailUser"] = null;
+            Session["emailAdmin"] = null;
+            Session["Secret"] = null;
+
             userView.flights = new List<Flight>();
             adminView.admin = new Admin();
             List<Admin> admins = (from x in adminDal.Admins where (x.Email == email && x.Password == password) select x).ToList<Admin>();
@@ -86,8 +96,12 @@ namespace TravelApp.Controllers
                 adminView.planes = planes;
                 return View("adminPanel", adminView);
             }
+            else
+            {
+                ViewBag.noUser = "Email or password is incorrect!";
+            }
 
-            
+
             List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
             if (temp_flights.Count != 0)
                 userView.flights = temp_flights;
@@ -103,6 +117,11 @@ namespace TravelApp.Controllers
 
         public ActionResult UserSignIn(string email, string password)
         {
+            Session["HideEmail"] = null;
+            Session["emailUser"] = null;
+            Session["emailAdmin"] = null;
+            Session["Secret"] = null;
+
             userView.flights = new List<Flight>();
             userView.user = new User();
             List<User> users = (from x in udal.Users where (x.Email == email && x.Password == password) select x).ToList<User>();
@@ -115,6 +134,10 @@ namespace TravelApp.Controllers
                 Session["pickedFlight"] = 99999;
                 userView.boughtFlights = (from x in odal.Orders where userView.user.Email == x.Email select x).ToList<Order>();
                 return View("MyFlights", userView);
+            }
+            else
+            {
+                ViewBag.noUser = "Email or password is incorrect!";
             }
 
             List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();

@@ -14,7 +14,7 @@ namespace TravelApp.Models
         [Required(ErrorMessage = "Id has to be more than 1 digit")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Incorrect Input")]
         public int PlaneId { get; set; }
-        [Required(ErrorMessage = "From has to be more than 1 character")]
+        [Required(ErrorMessage = "Plane Type has to be more than 1 character")]
         public string PlaneType { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]

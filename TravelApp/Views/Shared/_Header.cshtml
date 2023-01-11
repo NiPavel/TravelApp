@@ -29,6 +29,10 @@
                 </button>
                 <div class="dropdown-menu">
                     <form class="px-4 py-3" action="@Url.Content("~/Home/UserSignIn")" method="post">
+                        @if (ViewBag.noUser != null)
+                        {
+                            <div class="text-danger form-text">@ViewBag.noUser</div>
+                        }
                         <div class="mb-3">
                             <label for="Email" class="form-label">Email address</label>
                             <input name="email" type="email" class="form-control" id="Email" placeholder="email@example.com">
@@ -52,6 +56,10 @@
                     </button>
                     <div class="dropdown-menu">
                         <form class="px-4 py-3" action="@Url.Content("~/Home/AdminPanel")" method="post">
+                            @if (ViewBag.noUser != null)
+                            {
+                                <div class="text-danger form-text">@ViewBag.noUser</div>
+                            }
                             <div class="mb-3">
                                 <label for="Email" class="form-label">Email address</label>
                                 <input name="email" type="email" class="form-control" id="Email" placeholder="email@example.com">

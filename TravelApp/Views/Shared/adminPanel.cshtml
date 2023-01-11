@@ -18,6 +18,10 @@
         {
             <div class="text-success">@ViewBag.AddedFlight</div>
         }
+        @if (ViewBag.AddedPlane != null)
+        {
+            <div class="text-success">@ViewBag.AddedPlane</div>
+        }
         <h4 class="p-2">Flights</h4>
         <form action="@Url.Content("~/AddFlight")" method="post">
             <input type="submit" name="name" value="Add Flight" class="btn btn-primary" id="add-flight" />
