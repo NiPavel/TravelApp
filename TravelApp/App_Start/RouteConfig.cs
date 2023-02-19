@@ -20,6 +20,12 @@ namespace TravelApp
             );
 
             routes.MapRoute(
+                name: "AuthAdmin",
+                url: "AuthAdmin",
+                defaults: new { controller = "Home", action = "AuthAdmin", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "OneDirection",
                 url: "OneDirectionFly",
                 defaults: new { controller = "Home", action = "OneDirectionFly", id = UrlParameter.Optional }
@@ -81,7 +87,7 @@ namespace TravelApp
 
             routes.MapRoute(
                 name: "SignIn",
-                url: "{controller}/AdminPanel",
+                url: "{controller}/SignIn",
                 defaults: new { controller = "Home", action = "SignIn", id = UrlParameter.Optional }
             );
 

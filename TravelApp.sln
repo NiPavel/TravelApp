@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelApp", "TravelApp\TravelApp.csproj", "{2566B4A8-5385-491C-BE14-D29729124825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoFactorAuth", "..\ClassLibrary1\TwoFactorAuth\TwoFactorAuth\TwoFactorAuth.csproj", "{EA144962-EF50-420A-974A-DF8E1398B91A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoFactorAuth", "..\PassAuth\TwoFactorAuth\TwoFactorAuth\TwoFactorAuth.csproj", "{EA144962-EF50-420A-974A-DF8E1398B91A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

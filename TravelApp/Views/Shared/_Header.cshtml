@@ -55,7 +55,7 @@
                         Enter for Admin
                     </button>
                     <div class="dropdown-menu">
-                        <form class="px-4 py-3" action="@Url.Content("~/Home/AdminPanel")" method="post">
+                        <form class="px-4 py-3" action="@Url.Content("~/Home/SignIn")" method="post">
                             @if (ViewBag.noUser != null)
                             {
                                 <div class="text-danger form-text">@ViewBag.noUser</div>

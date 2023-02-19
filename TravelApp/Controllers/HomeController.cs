@@ -77,38 +77,14 @@ namespace TravelApp.Controllers
             return View("MyFlights", userView);
         }
 
-        public ActionResult Auth()
+        public ActionResult AuthAdmin(string secret)
         {
-            return View();
-        }
-
-        public ActionResult SignIn(string email, string password)
-        {
-            Session["HideEmail"] = null;
-            Session["emailUser"] = null;
-            Session["emailAdmin"] = null;
-            Session["Secret"] = null;
-
-            userView.flights = new List<Flight>();
-            adminView.admin = new Admin();
-            List<Admin> admins = (from x in adminDal.Admins select x).ToList<Admin>();
-            foreach(Admin admin in admins)
-            {
-                tfa.UserName = admin.Email;
-                tfa.Password = admin.Password;
-                tfa.Email = admin.Email;
-                tfa.Phone = admin.Phone;
-
-                Session["codeSent"] = tfa.CheckLogin(email, password);
-                if ((bool)Session["codeSent"])
-                    return View("Auth", adminView);
-            }
-
-            if (admins.Count != 0)
+            tfa = (TFA)Session["tfa"];
+            string msg = tfa.CheckSecretCode(secret);
+            if (msg == "valid")
             {
                 Session["AdminIn"] = true;
-                adminView.admin = admins[0];
-                Session["Admin"] = adminView.admin;
+                adminView.admin = (Admin)Session["Admin"];
 
                 List<Flight> flights = (from x in dal.Flights select x).ToList<Flight>();
                 adminView.flights = flights;
@@ -116,11 +92,58 @@ namespace TravelApp.Controllers
                 adminView.planes = planes;
                 return View("adminPanel", adminView);
             }
+            else if (msg == "wrong")
+            {
+                adminView.admin = (Admin)Session["Admin"];
+                ViewBag.wrongSecret = "The secret code is wrong!";
+                return View("Auth", adminView);
+            }
             else
             {
-                ViewBag.noUser = "Email or password is incorrect!";
+                List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
+                if (temp_flights.Count != 0)
+                    userView.flights = temp_flights;
+
+                if (Session["User"] != null)
+                    userView.user = (User)Session["User"];
+
+                if (Session["choosenFlights"] != null)
+                    userView.choosenFlights = (List<List<Flight>>)Session["choosenFlights"];
+
+                return View("HomePage", userView);
             }
 
+        }
+
+        public ActionResult SignIn(string email, string password, bool sendSms=false, bool sendEmail=false)
+        {
+            Session["HideEmail"] = null;
+            Session["emailUser"] = null;
+            Session["emailAdmin"] = null;
+            Session["Secret"] = null;
+
+            tfa.sendEmail = sendEmail;
+            tfa.sendSMS = sendSms;
+
+            userView.flights = new List<Flight>();
+            adminView.admin = new Admin();
+            List<Admin> admins = (from x in adminDal.Admins select x).ToList<Admin>();
+            for(int i = 0; i< admins.Count; i++)
+            {
+                tfa.UserName = admins[i].Email;
+                tfa.Password = admins[i].Password;
+                tfa.Email = admins[i].Email;
+                tfa.Phone = admins[i].Phone;
+
+                Session["codeSent"] = tfa.CheckLogin(email, password);
+                Session["tfa"] = tfa;
+                if ((bool)Session["codeSent"])
+                {
+                    adminView.admin = admins[i];
+                    Session["Admin"] = adminView.admin;
+                    return View("Auth", adminView);
+                }
+            }
 
             List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
             if (temp_flights.Count != 0)

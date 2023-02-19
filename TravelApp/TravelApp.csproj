@@ -129,6 +129,9 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </Content>
     <None Include="Scripts\jquery-3.6.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.1.js" />
     <Content Include="Scripts\jquery-3.6.1.min.js" />
@@ -302,7 +305,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ClassLibrary1\TwoFactorAuth\TwoFactorAuth\TwoFactorAuth.csproj">
+    <ProjectReference Include="..\..\PassAuth\TwoFactorAuth\TwoFactorAuth\TwoFactorAuth.csproj">
       <Project>{ea144962-ef50-420a-974a-df8e1398b91a}</Project>
       <Name>TwoFactorAuth</Name>
     </ProjectReference>
