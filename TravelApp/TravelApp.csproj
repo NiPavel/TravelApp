@@ -284,6 +284,7 @@
     <Content Include="Views\AdminPanel\AddPlane.cshtml" />
     <Content Include="Views\AdminPanel\EditPlane.cshtml" />
     <Content Include="Views\ChangePass\newUserPassword.cshtml" />
+    <Content Include="Views\Shared\Auth.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -299,6 +300,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ClassLibrary1\TwoFactorAuth\TwoFactorAuth\TwoFactorAuth.csproj">
+      <Project>{ea144962-ef50-420a-974a-df8e1398b91a}</Project>
+      <Name>TwoFactorAuth</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

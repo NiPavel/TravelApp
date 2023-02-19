@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using TravelApp.Models;
+using TwoFactorAuth;
 
 namespace TravelApp.ViewModel
 {
@@ -27,6 +28,7 @@ namespace TravelApp.ViewModel
 
         public List<List<Flight>> choosenFlights { get; set;}
         public List<Order> boughtFlights { get; set;}
+
 
     }
 }

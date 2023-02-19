@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Auth";
+    Layout = "~/Views/Shared/_MyDefaultLayout.cshtml";
+}
+
+<div class="container">
+    <h2 class="m-4">Reset Password</h2>
+    @if (Session["Secret"] != null)
+    {
+        <form class="row g-3 mx-auto" action="confirmSecret" method="post">
+            <div class="col-auto">
+                <label for="inputPassword2" class="visually-hidden">Secret Code</label>
+                <input type="text" class="form-control" id="inputPassword2" placeholder="Secret Code" name="secret">
+                @if (ViewBag.wrongSecret != null)
+                {
+                    <h6 class="text-danger">@ViewBag.wrongSecret</h6>
+                }
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Send a Code</button>
+            </div>
+        </form>
+    }
+</div>
+

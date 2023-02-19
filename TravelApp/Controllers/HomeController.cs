@@ -8,11 +8,14 @@ using System.Web.Mvc;
 using TravelApp.Dal;
 using TravelApp.Models;
 using TravelApp.ViewModel;
+using TwoFactorAuth;
 
 namespace TravelApp.Controllers
 {
     public class HomeController : Controller
     {
+        TFA tfa = new TFA();
+
         public static int count = 0;
         AdminDal adminDal = new AdminDal();
         FlightsDal dal = new FlightsDal();
@@ -74,6 +77,11 @@ namespace TravelApp.Controllers
             return View("MyFlights", userView);
         }
 
+        public ActionResult Auth()
+        {
+            return View();
+        }
+
         public ActionResult SignIn(string email, string password)
         {
             Session["HideEmail"] = null;
@@ -83,7 +91,19 @@ namespace TravelApp.Controllers
 
             userView.flights = new List<Flight>();
             adminView.admin = new Admin();
-            List<Admin> admins = (from x in adminDal.Admins where (x.Email == email && x.Password == password) select x).ToList<Admin>();
+            List<Admin> admins = (from x in adminDal.Admins select x).ToList<Admin>();
+            foreach(Admin admin in admins)
+            {
+                tfa.UserName = admin.Email;
+                tfa.Password = admin.Password;
+                tfa.Email = admin.Email;
+                tfa.Phone = admin.Phone;
+
+                Session["codeSent"] = tfa.CheckLogin(email, password);
+                if ((bool)Session["codeSent"])
+                    return View("Auth", adminView);
+            }
+
             if (admins.Count != 0)
             {
                 Session["AdminIn"] = true;
@@ -509,5 +529,6 @@ namespace TravelApp.Controllers
             }
             return View("MakePayment", userView);
         }
+
     }
 }
