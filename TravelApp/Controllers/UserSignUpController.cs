@@ -6,11 +6,13 @@ using System.Web.Mvc;
 using TravelApp.Models;
 using TravelApp.Dal;
 using TravelApp.ViewModel;
+using TwoFactorAuth;
 
 namespace TravelApp.Controllers
 {
     public class UserSignUpController : Controller
     {
+        TFA tfa = new TFA();
         UserDal dal = new UserDal();
         UserView userView= new UserView();
         // GET: UserSignUp
@@ -27,6 +29,8 @@ namespace TravelApp.Controllers
             bool userEmail = (from x in dal.Users where x.Email == user.Email select x).Any();
             if (ModelState.IsValid && !userEmail)
             {
+                userView.user.Ip = tfa.getIpAdress();
+                userView.user.Password = tfa.encrypt(user.Password);
                 dal.Users.Add(user);
                 dal.SaveChanges();
                 userView.users = dal.Users.ToList<User>();

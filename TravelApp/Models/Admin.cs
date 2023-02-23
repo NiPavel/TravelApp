@@ -26,5 +26,18 @@ namespace TravelApp.Models
         [Required(ErrorMessage = "Enter the phone please!")]
         [RegularExpression("^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$")]
         public string Phone { get; set; }
+        public string Ip { get; set; }
+
+        public Admin() { }
+        public Admin(object[] objects)
+        {
+            FirstName = objects[0].ToString();
+            LastName = objects[1].ToString();
+            Password = objects[2].ToString();
+            Email = objects[3].ToString();
+            Phone = objects[4].ToString();
+            Ip = objects[5].ToString();
+        }
+
     }
 }

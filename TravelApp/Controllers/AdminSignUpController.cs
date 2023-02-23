@@ -7,11 +7,14 @@ using TravelApp.Models;
 using TravelApp.Dal;
 using TravelApp.ViewModel;
 using System.Web.UI.WebControls;
+using TwoFactorAuth;
 
 namespace TravelApp.Controllers
 {
     public class AdminSignUpController : Controller
     {
+        TFA tfa = new TFA();
+
         private static string secret = "Secret";
         AdminDal dal = new AdminDal();
         UserDal udal = new UserDal();
@@ -36,15 +39,18 @@ namespace TravelApp.Controllers
             {
                 if (ModelState.IsValid && !sameEmail)
                 {
-                    dal.Admins.Add(admin);
+                    adminView.admin.Ip = tfa.getIpAdress();
+                    adminView.admin.Password = tfa.encrypt(admin.Password);
+                    dal.Admins.Add(adminView.admin);
                     dal.SaveChanges();
 
                     User user = new User();
                     user.FirstName = admin.FirstName;
                     user.LastName = admin.LastName;
                     user.Email = admin.Email;
-                    user.Password = admin.Password;
+                    user.Password = adminView.admin.Password;
                     user.Phone= admin.Phone;
+                    user.Ip = adminView.admin.Ip;
                     udal.Users.Add(user);
                     udal.SaveChanges();
 
