@@ -79,7 +79,6 @@ namespace TravelApp.Controllers
 
         public ActionResult AuthAdmin(string secret)
         {
-            adminView.admin = (Admin)Session["Admin"];
             tfa = (TFA)Session["tfa"];
             string msg = tfa.CheckSecretCode(secret);
             
@@ -92,34 +91,49 @@ namespace TravelApp.Controllers
             if (msg == "valid")
             {
                 Session["reSend"] = null;
-                Session["AdminIn"] = true;
-                adminView.admin = (Admin)Session["Admin"];
-                if (tfa.getChangedIp())
+                if (Session["Admin"] != null)
                 {
-                    adminView.admin.Ip = tfa.getIpAdress();
-                    adminDal.Admins.AddOrUpdate(adminView.admin);
-                    adminDal.SaveChanges();
+                    Session["AdminIn"] = true;
+                    adminView.admin = (Admin)Session["Admin"];
+                    if (tfa.getChangedIp())
+                    {
+                        adminView.admin.Ip = tfa.getIpAdress();
+                        adminDal.Admins.AddOrUpdate(adminView.admin);
+                        adminDal.SaveChanges();
+                    }
+                    List<Flight> flights = (from x in dal.Flights select x).ToList<Flight>();
+                    adminView.flights = flights;
+                    List<Plane> planes = (from x in pldal.Planes select x).ToList<Plane>();
+                    adminView.planes = planes;
+                    return View("adminPanel", adminView);
                 }
-
-                List<Flight> flights = (from x in dal.Flights select x).ToList<Flight>();
-                adminView.flights = flights;
-                List<Plane> planes = (from x in pldal.Planes select x).ToList<Plane>();
-                adminView.planes = planes;
-                return View("adminPanel", adminView);
+                else
+                {
+                    Session["UserIn"] = true;
+                    userView.user = (User)Session["User"];
+                    if (tfa.getChangedIp())
+                    {
+                        userView.user.Ip = tfa.getIpAdress();
+                        udal.Users.AddOrUpdate(userView.user);
+                        udal.SaveChanges();
+                    }
+                    Session["IdCount"] = 1;
+                    Session["pickedFlight"] = 99999;
+                    userView.boughtFlights = (from x in odal.Orders where userView.user.Email == x.Email select x).ToList<Order>();
+                    return View("MyFlights", userView);
+                }
             }
             else if (msg == "wrong")
             {
                 Session["reSend"] = null;
-                adminView.admin = (Admin)Session["Admin"];
                 ViewBag.wrongSecret = "The secret code is wrong!";
-                return View("Auth", adminView);
+                return View("Auth");
             }
             else
             {
-                adminView.admin = (Admin)Session["Admin"];
                 Session["reSend"] = true;
                 ViewBag.wrongSecret = "Timeout!";
-                return View("Auth", adminView);
+                return View("Auth");
             }
         }
 
@@ -171,30 +185,40 @@ namespace TravelApp.Controllers
             return View("HomePage", userView);
         }
 
-        public ActionResult UserSignIn(string email, string password)
+        public ActionResult UserSignIn(string email, string password, bool sendSms = false, bool sendEmail = false)
         {
+            string stringConnection = "Data Source=DESKTOP-MICG2LQ; Integrated Security=true;Initial Catalog=TravelProject;";
+            string query = "SELECT * From dbo.Users";
+            string dbPassword = "Password";
+            string dbUsername = "Email";
+
             Session["HideEmail"] = null;
             Session["emailUser"] = null;
             Session["emailAdmin"] = null;
             Session["Secret"] = null;
 
+            tfa.sendEmail = sendEmail;
+            tfa.sendSMS = sendSms;
+
             userView.flights = new List<Flight>();
             userView.user = new User();
-            List<User> users = (from x in udal.Users where (x.Email == email && x.Password == password) select x).ToList<User>();
-            if (users.Count != 0)
+
+            User user = new User(tfa.authenticate(stringConnection, query, dbUsername, dbPassword, email, password));
+            if (user != null)
             {
-                Session["UserIn"] = true;
-                userView.user = users[0];
-                Session["User"] = userView.user;
-                Session["IdCount"] = 1;
-                Session["pickedFlight"] = 99999;
-                userView.boughtFlights = (from x in odal.Orders where userView.user.Email == x.Email select x).ToList<Order>();
-                return View("MyFlights", userView);
+                userView.user = user;
+                tfa.setEmailandPhone(user.Email, user.Phone);
+
+                Session["codeSent"] = tfa.SendCode();
+                Session["tfa"] = tfa;
+                if ((bool)Session["codeSent"])
+                {
+                    Session["User"] = userView.user;
+                    return View("Auth", userView);
+                }
             }
-            else
-            {
+            if (!(bool)Session["codeSent"])
                 ViewBag.noUser = "Email or password is incorrect!";
-            }
 
             List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
             if (temp_flights.Count != 0)
