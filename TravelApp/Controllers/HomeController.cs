@@ -156,7 +156,7 @@ namespace TravelApp.Controllers
             tfa.fromMail = "travelbuy4@gmail.com";
             tfa.fromPassword = "ookzbtkhxhekyqml";
             tfa.accountSid = "AC8fa78e3d552c3f7f41f45b4d0d50b71f";
-            tfa.authToken = "95a3f4de11760004350080bfa7ba6cbe";
+            tfa.authToken = "a95772b8e6f480d8885054ba54e3769a";
             tfa.fromPhone = "+12316133401";
 
             userView.flights = new List<Flight>();
@@ -203,8 +203,14 @@ namespace TravelApp.Controllers
             Session["emailAdmin"] = null;
             Session["Secret"] = null;
 
+            //initiate variables of tfa
             tfa.sendEmail = sendEmail;
             tfa.sendSMS = sendSms;
+            tfa.fromMail = "travelbuy4@gmail.com";
+            tfa.fromPassword = "ookzbtkhxhekyqml";
+            tfa.accountSid = "AC8fa78e3d552c3f7f41f45b4d0d50b71f";
+            tfa.authToken = "a95772b8e6f480d8885054ba54e3769a";
+            tfa.fromPhone = "+12316133401";
 
             userView.flights = new List<Flight>();
             userView.user = new User();
