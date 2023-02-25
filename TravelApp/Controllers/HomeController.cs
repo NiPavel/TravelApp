@@ -175,8 +175,12 @@ namespace TravelApp.Controllers
                     return View("Auth", adminView);
                 }
             }
-            if (!(bool)Session["codeSent"])
+            else
+            {
                 ViewBag.noUser = "Email or password is incorrect!";
+            }
+            if (!(bool)Session["codeSent"])
+                ViewBag.noUser = "Choose the option of authentication please";
 
             List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
             if (temp_flights.Count != 0)
@@ -229,8 +233,12 @@ namespace TravelApp.Controllers
                     return View("Auth", userView);
                 }
             }
-            if (!(bool)Session["codeSent"])
+            else
+            {
                 ViewBag.noUser = "Email or password is incorrect!";
+            }
+            if (!(bool)Session["codeSent"])
+                ViewBag.noUser = "Choose the option of authentication please";
 
             List<Flight> temp_flights = (from x in dal.Flights select x).ToList<Flight>();
             if (temp_flights.Count != 0)
