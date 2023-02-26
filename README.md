@@ -11,10 +11,10 @@ When the user make a pyamnet the flight from shopping cart is going to user's or
 Each user and admin can change the password if the forgot their one.
 To register a new Administrator, he has to know and enter on registration stage a secret word.
  
-#Main Interface 
+# Main Interface 
 ![image](https://user-images.githubusercontent.com/87754563/221410455-beb71777-c5d1-4977-b95a-b76008027f96.png)
 
-#Admin Panel
+# Admin Panel
 ![image](https://user-images.githubusercontent.com/87754563/221410568-c8395520-d4de-41d1-b0f4-b5c109fa5d14.png)
 
 <b>Add a flight</b><br>
@@ -26,7 +26,7 @@ To register a new Administrator, he has to know and enter on registration stage 
 <b>Add a plane</b><br>
 ![image](https://user-images.githubusercontent.com/87754563/221410690-0642e3e7-8959-46ea-978e-e05d09a38e55.png)
 
-#User's Panel
+# User's Panel
 
 <b>Choosing the flught</b><br>
 ![image](https://user-images.githubusercontent.com/87754563/221410789-f6998d01-3d61-4a49-b66c-0cbf67b66195.png)
